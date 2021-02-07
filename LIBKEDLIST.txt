@@ -1,0 +1,486 @@
+
+#include <iostream>
+using namespace std;
+
+class Node{
+private:
+	int data;
+	Node* next;
+public:
+	Node(){
+		this->data=0;
+		this->next=NULL;
+	}
+
+	Node(int data){
+		this->data=data;
+		this->next=NULL;
+	}
+
+	int getData(){
+		return data;
+	}
+
+	void setNext(Node* next){
+		this->next=next;
+	}
+
+	Node* getNext(){
+		return next;
+	}
+};
+
+class LinkedList{
+public:
+    Node* head;
+
+    LinkedList(){
+    	head=NULL;
+    }
+
+   void InsertE(int data){
+	   Node *nextNode = new Node(data);
+        if(head==NULL){
+        	//cout<<"1";
+            head=nextNode;
+        }else{
+           Node* temp=head;
+           while(temp->getNext()!=NULL){
+        	  // cout<<"2";
+             temp=temp->getNext();
+           }
+           temp->setNext(nextNode);
+        }
+   }
+
+   void InsertB(int data){
+	   Node* newNode=new Node(data);
+	   if(head==NULL){
+           head=newNode;
+	   }else{
+		  newNode->setNext(head);
+          head=newNode;
+	   }
+   }
+
+   void DisplayNode(){
+	  // cout<<"h"<<endl;
+       if(head==NULL){
+    	   cout<<"List is Empty"<<endl;
+       }else{
+    	   Node* temp=head;
+    	   while(temp->getNext()!=NULL){
+    		  // cout<<"d"<<endl;
+               cout<<temp->getData()<<"->";
+               temp=temp->getNext();
+    	   }
+    	   cout<<temp->getData()<<endl;
+       }
+       cout<<endl;
+   }
+
+   void FindMid(){
+	   if(head==NULL){
+		   cout<<"Linked List is Empty"<<endl;
+	   }else{
+		   Node* temp=head;
+		   Node* mid=head;
+		   while(temp!=NULL &&temp->getNext()!=NULL){
+
+                mid=mid->getNext();
+                temp=temp->getNext()->getNext();
+		   }
+		   cout<<" Middle Element is "<<mid->getData()<<endl;
+	   }
+   }
+
+   void AtPosition(int data){
+	   int pos=0;
+	   if(head==NULL){
+		   cout<<"LinkedList is Empty"<<endl;
+	   }else{
+		   Node* temp=head;
+            //zero postion
+		   if(pos==data){
+			   cout<<" At "<<pos<<" Postion "<<temp->getData()<<endl;
+		   }else{
+			   while(temp!=NULL &&  temp->getNext()!=NULL){
+				       //found
+		                  if(pos==data)
+		                  {
+		                     cout<<" At "<<pos<<" Postion "<<temp->getData()<<endl;
+		                     break ;
+		                  }
+		                  temp=temp->getNext();
+		                  pos++;
+				   }
+			   //last element
+			   if(pos==data && temp->getNext()==NULL){
+				   cout<<" At "<<pos<<" Postion "<<temp->getData()<<endl;
+			   }
+			   //not found
+			   if(pos!=data && temp->getNext()==NULL)
+			   {
+				   cout<<" At "<<data<<" Postion data not available "<<endl;
+			   }
+		   }
+	   }
+   }
+
+
+
+   void EndElement(){
+	   if(head==NULL){
+		   cout<<"LinkedList is Empty"<<endl;
+	   }else{
+		   Node* temp=head;
+           while(temp!=NULL && temp->getNext()!=NULL){
+        	   temp=temp->getNext();
+           }
+           cout<<"Last Element is "<<temp->getData()<<endl;
+	   }
+   }
+
+   void FirstElement(){
+	   if(head==NULL){
+		   cout<<"LinkedList is Empty"<<endl;
+	   }else{
+	       cout<<"First Element is "<<head->getData()<<endl;
+	   }
+   }
+
+   void FistDelete(){
+	  // cout<<"P";
+	   if(head==NULL){
+		   cout<<"LinkedList is empty"<<endl;
+	   }else{
+
+		     Node* temp=head;
+			//  cout<<"P1";
+			 head=temp->getNext();
+			// cout<<head->getData();
+          temp=NULL;
+		  delete temp;
+	   }
+   }
+
+   void EndDelete(){
+	   if(head==NULL){
+		   cout<<"LinkedList is Empty";
+	   }else{
+          Node* temp=head;
+          Node* prev;
+          while(temp!=NULL && temp->getNext()!=NULL){
+        	  prev=temp;
+        	  temp=temp->getNext();
+          }
+          prev->setNext(NULL);
+          temp=NULL;
+          delete temp;
+	   }
+   }
+
+   void DeleteNode(int data){
+	   if(head==NULL){
+		   cout<<"LinkedList is Empty"<<endl;
+	   }else if(head->getData()==data){
+		    FistDelete();
+	   }else{
+		   Node* temp=head;
+		   Node * prev;
+           while(temp!=NULL && temp->getData()!=data){
+              prev=temp;
+              temp=temp->getNext();
+           }
+           prev->setNext(temp->getNext());
+           temp=NULL;
+           delete temp;
+	   }
+   }
+
+   void MidDelete(){
+	   if(head==NULL){
+		   cout<<"LinkedList is Empty"<<endl;
+	   }else{
+		   Node* temp=head;
+		   Node* mid=head;
+		   Node* prevTemp=head;
+
+		   while(temp!=NULL && temp->getNext()!=NULL){
+			   prevTemp=mid;
+               mid=mid->getNext();
+               temp=temp->getNext()->getNext();
+		   }
+           cout<<" mid delete is "<<mid->getData()<<endl;
+		   prevTemp->setNext(mid->getNext());
+		   mid=NULL;
+		   delete mid;
+	   }
+   }
+
+   void InsertAtPosition(int position,int data){
+	   Node* newNode=new Node(data);
+	   int i=0;
+       if(position==0){
+    	   newNode->setNext(head);
+           head=newNode;
+       }else{
+    	   Node* temp=head;
+    	   Node* prev=head;
+    	   while(temp!=NULL && temp->getNext()!=NULL){
+    		   	   	   i++;
+    		   	   	   prev=temp;
+    		   	   	   temp=temp->getNext();
+    		   	   	   if(position==i){
+    		   	   		   	prev->setNext(newNode);
+    		   	   		   	newNode->setNext(temp);
+    		   	   		   	break;
+    		   	   	   }
+    	   }
+    	   if(position == (i+1) && temp->getNext()==NULL){
+    		   InsertE(data);
+    	   }else{
+    		   cout<<"sorry at "<<(i+2)<<" we cant add plases add data sequentially"<<endl;
+    	   }
+
+       }
+   }
+
+   void InsertAfter(int data,int after){
+       Node* newNode=new Node(data);
+	   if(head==NULL){
+		   cout<<"LinkedList is NULL"<<endl;
+	   }else{
+		   Node* temp=head;
+          if(temp->getData()==after){
+                newNode->setNext(temp->getNext());
+                temp->setNext(newNode);
+          }else{
+        	  while(temp!=NULL && temp->getData()!=after){
+                    temp=temp->getNext();
+                    if(temp->getNext()==NULL){
+                    	cout<<"Pleases select proper data"<<endl;
+
+                    }
+        	  }
+        	if(temp->getData()==after){
+        		 newNode->setNext(temp->getNext());
+        		  temp->setNext(newNode);
+        	}
+        	if(temp->getNext()==NULL && temp->getData()==after){
+        		InsertE(data);
+        	}
+          }
+	   }
+   }
+
+   void InsertBefore(int data,int before){
+	   Node* newNode=new Node(data);
+	    if(head->getData()==before){
+            InsertB(data);
+	    }else{
+            Node* temp=head;
+            Node* prev=head;
+
+            while(temp!=NULL && temp->getData()!=before){
+            		prev=temp;
+            		temp=temp->getNext();
+            		if(temp->getNext()==NULL){
+            			cout<<"select proper data"<<endl;
+            		}
+            }
+
+            prev->setNext(newNode);
+            newNode->setNext(temp);
+	    }
+   }
+
+   int coutNodeInLinkedList(){
+	   int count=0;
+	   if(head==NULL){
+		   return 0;
+	   }else{
+		   Node* temp=head;
+		   while(temp!=NULL){
+                count++;
+                temp=temp->getNext();
+		   }
+		   return count;
+	   }
+
+   }
+
+void ReversePrint(Node *head){
+    if(head==NULL)
+    	return ;
+    else{
+    	ReversePrint(head->getNext());
+        cout<<head->getData()<<"->";
+    }
+}
+
+Node* ReverseLinkedList(Node* head){
+          if(head->getNext()==NULL || head==NULL)
+              return head;
+          Node* rest=ReverseLinkedList(head->getNext());
+          head->getNext()->setNext(head);
+          head->setNext(NULL);
+          return rest;
+}
+
+void ReverseLinkedListByIterator(){
+	         if(head==NULL){
+	        	 cout<<"Empty"<<endl;
+	         }else{
+	        	 Node* next;
+	        	 Node* prev=NULL;
+	        	 Node* current=head;
+
+	        	 while(current!=NULL){
+	        		 next=current->getNext();
+	        		 current->setNext(prev);
+	        		 prev=current;
+	        		 current=next;
+	        	 }
+
+	        	 head=prev;
+	         }
+}
+
+Node* RemoveAllElementMatchesBygivenElement(Node* head,int data){
+            Node* temp=head;
+            Node * prev=NULL;
+
+            while (head->getData() == data)
+            {
+                head = head->getNext();
+                if(head->getNext()==NULL){
+                	head=NULL;
+                	cout<<"All element are same"<<endl;
+                	return head;
+                }
+            }
+
+    		while(temp!=NULL && temp->getNext()!=NULL){
+    			prev=temp;
+                temp=temp->getNext();
+                if(data==temp->getData()){
+                   cout<<temp->getData()<<" ";
+                   prev->setNext(temp->getNext());
+                   delete temp;
+                }
+    		}
+
+    		if(temp->getData()==data){
+              prev->setNext(NULL);
+          	  cout<<temp->getData()<<" ";
+              delete temp;
+    		}
+
+    		return head;
+        }
+
+
+
+};
+
+int main() {
+
+	LinkedList li;
+//
+//	int p1 = li.coutNodeInLinkedList();
+//	cout<<p1<<endl;
+//
+//	li.InsertE(1);
+//	li.InsertE(20);
+//	li.InsertE(30);
+//	li.InsertE(40);
+//	li.InsertE(50);
+//	li.InsertE(60);
+//	li.InsertE(70);
+//	li.InsertE(80);
+//	li.InsertE(90);
+//	li.InsertE(100);
+//	li.InsertE(110);
+//
+//	int p = li.coutNodeInLinkedList();
+//	cout<<p<<endl;
+//	li.DisplayNode();
+//    //li.FindMid();
+//
+////    li.AtPosition(0);
+////    li.AtPosition(4);
+////    li.AtPosition(8);
+////    li.AtPosition(10);
+////    li.AtPosition(13);
+////    li.AtPosition(4);
+////    li.AtPosition(100);
+//
+////    li.FirstElement();
+////    li.EndElement();
+////
+////    li.FindMid();
+//	li.FindMid();
+//	li.MidDelete();
+//	li.DisplayNode();
+//
+//	li.FistDelete();
+//	li.DisplayNode();
+//
+//	li.FindMid();
+//	li.MidDelete();
+//	li.DisplayNode();
+//
+//	li.EndDelete();
+//	li.DisplayNode();
+//
+//	li.FindMid();
+//	li.MidDelete();
+//	li.DisplayNode();
+//
+//	li.DeleteNode(20);
+//	li.DisplayNode();
+//	li.FindMid();
+//	li.MidDelete();
+//	li.DisplayNode();
+//
+//	li.InsertAtPosition(4,55);
+//	li.DisplayNode();
+//
+//	li.InsertAfter(66,90);
+//	li.DisplayNode();
+//
+//	li.InsertBefore(99,55);
+//	li.DisplayNode();
+//
+//int i = li.coutNodeInLinkedList();
+//cout<<i<<endl;
+//
+//li.ReversePrint(li.head);
+//cout<<endl;
+//
+//li.head = li.ReverseLinkedList(li.head);
+//li.InsertB(40);
+//li.DisplayNode();
+//cout<<"p"<<endl;
+//li.ReverseLinkedListByIterator();
+//li.DisplayNode();
+
+		li.InsertE(10);
+		li.InsertE(10);
+		li.InsertE(30);
+		li.InsertE(40);
+		li.InsertE(10);
+		li.InsertE(60);
+		li.InsertE(10);
+
+		li.DisplayNode();
+
+
+
+// li.head=li.RemoveAllElementMatchesBygivenElement(li.head, 10);
+
+// 		li.DisplayNode();
+
+	return 0;
+}
