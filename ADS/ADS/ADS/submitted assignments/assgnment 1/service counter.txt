@@ -1,0 +1,90 @@
+#include<iostream>
+
+using namespace std;
+
+class Counter
+{
+    private:
+        int rear,front,size;
+        int *store;
+    public:
+        Counter(int size)
+        {
+            store=NULL;
+            rear=front=-1;
+            this->size=size;
+            store=new int[size];
+        }
+        ~Counter()
+        {
+            delete [] store;
+        }
+        int isFull()
+        {
+            if(rear==size-1)
+                return 1;
+            else
+                return 0;
+        }
+        int isEmpty()
+        {
+            if(rear==front)
+                return 1;
+            else
+                return 0;
+        }
+        void enqueue(int data)
+        {
+            if(!isFull())
+                rear++;
+                store[rear]=data;
+                if(front==-1)
+                    front=0;
+        }
+        int dequeue()
+        {
+            if(!isEmpty())
+            front++;
+        }
+        int getmatch()
+        {
+            return front==rear;
+        }
+        void print()
+        {
+            cout<<(rear-front)<<" ";
+            do
+            {
+                front++;
+                cout<<store[front]<<" ";
+            }
+            while(front!=rear);
+            /*{
+                 front++;
+                cout<<store[front]<<" ";
+            }*/
+        }
+        
+};
+int main()
+{
+    Counter c(20);
+    int x,tm=0,z;
+    cin>>z;
+    while(1)
+    {
+        cin>>x;
+        if(x==-1)
+            break;
+        if(x==0 || (x>-1 && x<=z))
+            c.enqueue(x);
+        while(tm<=x)
+        {
+            if((tm+1)%3==0 && tm<+z && (!c.getmatch()))
+                c.dequeue();
+                tm++;
+        }
+    }
+    c.print();
+    return 0;
+}

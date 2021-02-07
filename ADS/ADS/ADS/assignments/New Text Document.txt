@@ -1,0 +1,214 @@
+#include<iostream>
+#include<assert.h>
+using namespace std;
+
+class stack
+{
+ private:
+         int top;
+         int size;
+         int *store;
+         int data;
+
+ public:
+         stack(int size)
+         {
+           this->size=size;
+           top=-1;
+           store=new int[size];
+         }
+
+         ~stack()
+         {
+          delete[] store;
+         }
+
+        int isFull()
+        {
+          if(top==(size-1))
+          {
+           cout<<"stack is full"<<endl;
+          return 1;
+          }
+         else
+          {
+           return 0;
+          }
+        }
+
+        int isEmpty()
+        {
+         if(top==-1)
+          {
+            cout<<"stack is empty"<<endl;
+            return 1;
+          }
+          else
+          {
+            return 0;
+          }
+        }
+
+
+        void push(int data)
+        {
+         assert(!isFull());
+          top++;
+          store[top]=data;
+        }
+
+        int pop()
+        {
+         assert(!isEmpty());
+          int data=store[top];
+                top--;
+                return data;
+
+        }
+};
+
+int main()
+{
+ stack s1(5);
+ s1.push(11);
+ s1.push(12);
+ s1.push(13);
+ s1.push(14);
+ s1.push(15);
+
+cout<<s1.pop()<<endl;
+cout<<s1.pop()<<endl;
+cout<<s1.pop()<<endl;
+cout<<s1.pop()<<endl;
+cout<<s1.pop()<<endl;
+return 0;
+}
+-----------------------------------------------------------------------------------------
+stackcmd
+#include"stack.cpp"
+using namespace std;
+
+int main(int argc, char** args)
+
+{
+        string cmd;
+        stack s1(atoi(args[1]));
+
+        while(1)
+        {
+         cin>>cmd;
+         if(cmd=="exit")
+                break;
+        if(cmd=="p")
+        {
+                int data;
+                cin>>data;
+                if(!s1.isFull())
+                {
+                        s1.push(data);
+                }
+        }
+
+        if(cmd=="pop")
+        {
+                if(!s1.isEmpty())
+                {
+                        cout<<s1.pop()<<endl;
+
+                }
+        }
+        }
+ return 0;
+}
+-------------------------------------------------------------------------------------------------------------
+queue
+#include<iostream>
+#include<assert.h>
+using namespace std;
+
+class queue
+{
+        private:
+                int rare;
+                int front;
+                int size;
+                int data;
+                int *store;
+
+        public:
+                queue(int size)
+                {
+                        this->size=size;
+                        rare=-1;
+                        front=-1;
+                        store=new int[size];
+
+                }
+
+                ~queue()
+                {
+                        delete[] store;
+                }
+
+                int isEmpty()
+                {
+                        if(front==rare)
+                        {
+                                cout<<"queue is empty"<<endl;
+                                return 1;
+                        }
+                        else
+                                return 0;
+
+                }
+
+                int isFull()
+                {
+                        if(rare==size-1)
+                        {
+                                cout<<"queue is full"<<endl;
+                                return 1;
+                        }
+                        else
+                         return 0;
+                }
+
+                int enqueue(int data)
+                {
+                        assert(!isFull());
+                        rare++;
+                        store[rare]=data;
+                        return data;
+                }
+
+                int dequeue()
+                {
+                        assert(!isEmpty());
+                        front++;
+                        int data=store[front];
+                         if(front==rare)
+                                front=rare=-1;
+                        return data;
+                }
+};
+
+
+int main()
+{
+         queue q1(3);
+        q1.enqueue(11);
+
+        cout<<q1.enqueue(12)<<endl;
+        cout<<q1.enqueue(13)<<endl;
+//      q1.enqueue(14);
+
+        cout<<"------"<<endl;
+        cout<<q1.dequeue()<<endl;
+
+        cout<<q1.dequeue()<<endl;
+
+        cout<<q1.dequeue()<<endl;
+        cout<<q1.dequeue()<<endl;
+  return 0;
+}
+================================================

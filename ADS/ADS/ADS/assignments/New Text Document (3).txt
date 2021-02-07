@@ -1,0 +1,20 @@
+SinglyLinkedListNode *temp=head;
+    SinglyLinkedListNode *prev=head;
+    int pos=0;
+    if(pos!=position)
+    {
+        while(temp->data!=pos)
+        prev=temp;
+        temp=temp->next;
+        pos++;
+    }
+    if(temp==head)
+    {
+        head=head->next;
+    }
+    else
+    {
+        prev->next=temp->next;
+        delete temp;
+    }
+return head;

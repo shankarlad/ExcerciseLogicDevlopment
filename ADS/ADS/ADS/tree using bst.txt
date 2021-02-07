@@ -1,0 +1,191 @@
+#include<iostream>
+using namespace std;
+
+class queue
+{
+	private:
+		int front;
+		int rear;
+		int size;
+		int *store;
+	public:
+		queue(int size)
+		{	
+			front=rear=-1;
+			this->size=size;
+			store=new int[size];
+		}
+		~queue()
+		{
+			delete [] store;
+		}
+		int isFull()
+		{
+			if(rear==(size-1))
+				return 1;
+				return 0;
+		}
+		int isEmpty()
+		{
+			if(rear==front)
+				return 1;
+				return 0;
+		}
+		void enqueue(int data)
+		{
+			rear++;
+			store[rear]=data;
+		}	
+		int dequeue()
+		{
+			front++;
+			int data=store[front];
+			if(front==rear)
+			{
+				frpnt=rear=-1;
+			}			
+			return data;
+		}
+};
+
+class Node
+{
+	private:
+		int data;
+		Node* left;
+		Node* right;
+	public:
+		Node(int data)
+		{
+			this->data=data;
+			left=right=NULL;
+		}
+		void print()
+		{
+			cout<<data<<" ";
+		}
+		int getdata()
+		{
+			return data;
+		}
+		void setleft(Node *left)
+		{
+			this->left=left;
+		}
+		void setright(Node *right)
+		{
+			this->right=right;
+		}
+		Node *getleft()
+		{
+			return left;
+		}
+		Node *getright()
+		{
+			return right;
+		}
+};
+
+class BST
+{
+	private:
+		Node *root;
+	public:
+		BST()
+		{
+			root=NULL;
+		}
+		void insert(insert data)
+		{
+			Node *node=new node(data);
+			if(root==NULL)
+			{
+				root=node;
+			}	
+			else
+			{
+				Node *temp=root;
+				Node *prev=NULL;
+				while(temp!=NULL)
+				{
+					prev=temp;
+					if(data<=temp->getdata())
+						temp=temp->getleft();
+					else
+						temp=temp->getright();
+				}
+				if(data<=prev->getdata())
+					prev->setleft(node);
+				else
+					prev->setright(node);
+			}
+		}
+		void BFT()
+		{
+			queue<Node*> store(100);
+			store.enqueue(root);
+			while(!store.isEmpty())
+			{
+				Node *node=store.dequeue();
+				node->print();
+				if(node->getleft()!=NULL)
+				{
+					store.enqueue(node->getleft());
+				}
+				if(node->getright()!=NULL)
+				{
+					store.enqueue(node->getright());
+				}
+			} 
+		}
+};
+
+int main()
+{
+	BST bst;
+	while(1)
+	{
+		string cmd;
+		cin>>cmd;
+		if(cmd=="exit")
+		{
+			break;
+		}
+		if(cmd=="i")
+		{
+			int data;
+			cin>>data;
+			bst.insert(data);
+		}
+		if(cmd=="BFT")
+		{
+			bst.BFT();
+		}	
+	}
+return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

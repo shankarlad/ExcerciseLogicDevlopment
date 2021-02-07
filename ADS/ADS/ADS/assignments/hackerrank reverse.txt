@@ -1,0 +1,126 @@
+#include<iostream>
+#include<cstring>
+#include<stdlib.h>
+using namespace std;
+
+class Node
+{
+    private:
+        int data;
+        Node *next;
+    public:
+        Node(int data)
+        {
+            this->data=data;
+            next=NULL;
+        }
+        ~Node()
+        {
+            
+        }
+        int getdata()
+        {
+            return data;
+        }
+        Node *getnext()
+        {
+            return next;
+        }
+        void setnext(Node *next)
+        {
+            this->next=next;
+        }
+};
+
+class linklist
+{
+    private:
+        Node *head;
+    public:
+        linklist()
+        {
+            head=NULL;
+        }
+        ~linklist()
+        {
+            
+        }
+        void insertBegin(int data)
+        {
+            Node *node=new Node(data);
+            if(head==NULL)
+            {
+                head=node;
+            }
+            else
+            {
+                node->setnext(head);
+                head=node;
+            }
+        }
+        void reverses()
+        {
+            Node *temp;
+            temp=head;
+            cout<<"traversing the list ";
+            reverse1(temp);
+            cout<<"total no of nodes :";
+            cout<<endl;
+        }
+        void reverse1(Node *temp)
+        {
+            if(temp->getnext()!=NULL)
+            {
+                reverse1(temp->getnext());
+            }
+            cout<<temp->getdata()<<" ";
+        }
+  /*      void reverse()
+        {
+            Node *temp=head;
+            Node *prev=NULL;
+            Node *next=NULL;
+            while(temp!=NULL)
+            {
+                next=temp->getnext();
+                prev->setnext(temp->getnext());
+                prev=temp;
+                temp=next;
+            }
+            head=prev;
+        }*/
+        void print()
+        {
+            Node *temp=head;
+            int count=1;
+            cout<<"traversing the list ";
+            while(temp->getnext()!=NULL)
+            {
+                cout<<temp->getdata()<<" ";
+                temp=temp->getnext();
+                count++;
+            }
+            cout<<temp->getdata();
+            cout<<"total no of nodes :";
+            cout<<count;
+            cout<<" reversing the list............";
+        }
+};
+int main()
+{
+    linklist l;
+    int n;
+    while(1)
+    {
+        cin>>n;
+        if(n==0)
+            break;
+        else
+            l.insertBegin(n);
+    }
+    l.print();
+    cout<<endl;
+    l.reverses();
+  //  l.print();
+    return 0;
+}

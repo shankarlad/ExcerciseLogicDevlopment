@@ -1,0 +1,125 @@
+#include<iostream>
+#include<assert.h>
+#include<stdlib.h>
+using namespace std;
+class stack{
+        private:
+                int top;
+                int size;
+                int *store;
+        public:
+                stack(int size){
+                        top=-1;
+                        this->size=size;
+                        store=new int[size];
+                }
+                ~stack(){
+                        delete[] store;
+                }
+                int isFull(){
+                        if(top==size-1) {
+                                cout<<"The Stack is Full"<<endl;
+                                return 1;
+                        }
+                        else{
+                                return 0;
+                        }
+                }
+                int isEmpty(){
+                        if(top==-1){
+                                cout<<"The stack is Empty"<<endl;
+                                return 1;
+                        }
+                        else{
+                                return 0;
+                        }
+                }
+                void push(int data){
+                        assert(!isFull());
+                        top++;
+                        store[top]=data;
+                }
+                int pop(){
+                        assert(!isEmpty());
+                        int data=store[top];
+                        top--;
+                        return data;
+                }
+};
+int main(){
+	stack st;
+	int n;
+	cin>>n;
+	string s;
+	int flag=0;
+	for(int i=0;i=s.length();i++){
+		if(s[i]=='{' || s[i]=='[' || s[i]=='('){
+			st.push(s[i]);
+			flag=1;	
+		}
+	if(!st.isEmpty()){
+		if(s[i]=='}'){
+			if(st.top()=='{'){
+				st.pop();
+				contineue;
+			}
+			else{
+				break;
+			}	
+		}
+		if(s[i]==']'){
+			if(st.top()=='['){
+				st.pop();
+				contineue;
+			}
+			else{
+				break;
+			}	
+		}
+		if(s[i]==')'){
+			if(st.top()=='('){
+				st.pop();
+				contineue;
+			}
+			else{
+				break;
+			}	
+		}
+	}
+		if((st.isEpmty()) && (flag==1)){
+			cout<<"TURE"<<endl;
+		}
+		else{
+			cout<<"FALSE"<<endl;
+		}
+	}
+
+return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

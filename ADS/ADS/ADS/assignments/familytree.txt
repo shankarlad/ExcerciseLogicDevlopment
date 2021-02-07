@@ -1,0 +1,247 @@
+
+
+Skip to content
+Using Gmail with screen readers
+
+Family Tree
+Inbox
+x
+
+Sayali Shejawal
+Attachments
+Mar 23, 2020, 7:49 PM (4 days ago)
+to me
+
+
+Attachments area
+
+# include <iostream>
+
+using namespace std;
+
+class Node
+    {
+        private:
+            string name;
+            Node* left;
+            Node* right;
+        public:
+            Node()
+                {
+                    left = NULL;
+                    right = NULL;
+                }
+            Node(string name)
+                {
+                    this->name = name;
+                    left = NULL; 
+                    right = NULL;
+                }
+            string getName()
+                {
+                    return this->name;
+                }
+            void setLeft(Node* left)
+                {
+                    this->left = left;
+                }
+            void setRight(Node* right)
+                {
+                    this->right = right;
+                }
+            Node* getLeft()
+                {
+                    return left;
+                }
+            Node* getRight()
+                {
+                    return right;
+                }     
+    };
+
+class Tree
+{
+        private:
+            Node* root;
+        public:
+            Tree()
+            {
+             	root = NULL;
+            }
+            Node* getRoot()
+            {
+             	return root;
+            }
+            void insertName()
+            {
+             	string name;
+             	int num = 28;
+             	cin>>name;
+             	while(name != "END")
+                {
+                	if(this->root == NULL)
+                        {
+                         	Node* newnode = new Node(name);
+                                this->root = newnode;
+                                continue;
+                         }
+
+                         else if(root->getLeft() == NULL && root->getRight() == NULL)
+                         {
+                          	cin>>num;
+                                //cout<<"1"<<endl;
+                                 if(num == 2)
+                                 {
+                                  	cin>>name;
+                                        //cout<<"2"<<endl;
+                                        Node* newnode1 = new Node(name);
+                                        root->setLeft(newnode1);
+                                        cin>>name;
+                                        Node* newnode2 = new Node(name);
+                                        root->setRight(newnode2);
+                                        continue;
+                                  }
+                                  else if(num == 1)
+                                  {
+                                            cin>>name;
+                                            //cout<<"3"<<endl;
+                                            Node* newnode3 = new Node(name);
+                                            root->setLeft(newnode3);
+                                            root->setRight(NULL);
+                                            continue;
+                                  }
+                                  else if (num>2 || num<1)
+                                  {
+                                            cout<<"Wrong input...Enter either 1 or 2 only"<<endl;
+                                            continue;
+                                  }
+                           }
+
+                           else if(root != NULL)
+                           {
+                           	cin>>name;
+                                if(name == "END")
+                                        break;
+                                
+				else if(root->getLeft() != NULL)
+                                {
+                                 	//cout<<"4"<<endl;
+                                            
+                                         Node* temp = checkName(name);
+                                         if(temp != NULL)
+                                         {
+                                          	//cout<<"5"<<endl;
+                                                  cin>>num;
+                                                  if(num == 2)
+                                                        {
+                                                            cin>>name;
+                                                            //cout<<"6"<<endl;
+                                                            Node* newnode1 = new Node(name);
+                                                            temp->setLeft(newnode1);
+                                                            cin>>name;
+                                                            Node* newnode2 = new Node(name);
+                                                            temp->setRight(newnode2);
+                                                            continue;
+                                                        }
+                                                    else if(num == 1)
+                                                        {
+                                                            cin>>name;
+                                                            //cout<<"2"<<endl;
+                                                            Node* newnode3 = new Node(name);
+                                                            temp->setLeft(newnode3);
+                                                            temp->setRight(NULL);
+                                                            continue;
+                                                        }
+                                                    else if(num>2 || num<1)
+                                                        {
+                                                            cout<<"Wrong input...Enter either 1 or 2 only"<<endl;
+                                                            continue;
+                                                        }
+                                                }
+                                            else
+                                                {
+                                                    cout<<"Name not found...Enter again"<<endl;
+                                                    continue;
+                                                }
+                                        }
+                                }
+                        }
+                }
+                
+            Node* checkName(string name)
+                {
+                    return checkName(this->root, name);
+                }
+            
+            Node* checkName( Node* root, string name)
+                {
+                    //cout<""xxxx"<<endl;
+                    if(root != NULL)
+                        {
+                            if(root->getName() == name)
+                                return root;
+                            else
+                                {
+                                    //cout<<"pp"<<endl;
+                                    Node* temp = checkName(root->getLeft(), name);
+                                    if(temp == NULL)
+                                        {
+                                            //cout<<"qq"<<endl;
+                                            temp = checkName(root->getRight(), name);
+                                        }
+                                    //cout<<"rr"<<endl;
+                                    return temp;
+                                }
+                        }
+                    else
+                        return NULL;
+                }
+            string checkAncestor( string ancestor, string child)
+                {
+                    Node* ancestorPtr = checkName(ancestor);
+                    if(ancestorPtr == NULL)
+                        {
+                            return "NO1";
+                        }
+                    else if(ancestorPtr != NULL)
+                        {
+                            Node* childPtr = checkName(ancestorPtr, child);
+                            if(childPtr == NULL)
+                                return "NO";
+                            else if(childPtr != NULL)
+                                return "YES";    
+                        }
+                }
+                
+          /*  void preorder(Node* temp)
+                        {
+                            if(temp != NULL)
+                                {
+                                    cout<<temp->getName()<<">>";
+                                    //cout<<temp->getData()<<" ";
+                                    preorder(temp->getLeft());
+                                    preorder(temp->getRight());
+                                }
+                        }*/
+    };
+    
+int main() //yashu
+    {
+        Tree t1;
+        t1.insertName();
+      //  t1.preorder(t1.getRoot());
+       int no= 0;
+        cin>>no;
+        for(int i = 0; i<no; i++)
+            {
+                string ancestor;
+                cin>>ancestor;
+                string child;
+                cin>>child;
+                cout<<t1.checkAncestor(ancestor, child)<<endl;
+            }
+        
+        return 0;
+    }
+Family_Tree_Assi_03.txt
+Displaying Family_Tree_Assi_03.txt.

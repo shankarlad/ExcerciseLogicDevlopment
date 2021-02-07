@@ -1,0 +1,95 @@
+#include<iostream>
+#include<assert.h>
+#include<stdlib.h>
+using namespace std;
+class stack{
+        private:
+                int top;
+                int size;
+                int *store;
+        public:
+                stack(int size){
+                        top=-1;
+                        this->size=size;
+                        store=new int[size];
+                }
+                ~stack(){
+                        delete[] store;
+                }
+                int isFull(){
+                        if(top==size-1) {
+                                cout<<"The Stack is Full"<<endl;
+                                return 1;
+                        }
+                        else{
+                                return 0;
+                        }
+                }
+                int isEmpty(){
+                        if(top==-1){
+                                cout<<"The stack is Empty"<<endl;
+                                return 1;
+                        }
+                        else{
+                                return 0;
+                        }
+                }
+                void push(int data){
+                        assert(!isFull());
+                        top++;
+                        store[top]=data;
+                }
+                int pop(){
+                        assert(!isEmpty());
+                        int data=store[top];
+                        top--;
+                        return data;
+                }
+};
+/*
+int main(){
+
+        stack s1(5);
+
+        s1.push(11);
+        s1.push(12);
+        s1.push(13);
+        s1.push(14);
+        s1.push(15);
+cout<<"----------------------"<<endl;
+        cout<<s1.pop()<<endl;
+        cout<<s1.pop()<<endl;
+        cout<<s1.pop()<<endl;
+        cout<<s1.pop()<<endl;
+        cout<<s1.pop()<<endl;
+cout<<"----------------------"<<endl;
+return 0;
+}
+*/
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxCMDxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+#include"ads_1.cpp"
+using namespace std;
+
+int main(int c,char** ar){
+        int data;
+        string cmd;
+        stack s1(atoi(ar[1]));
+        while(1){
+                cin>>cmd;
+                if(cmd=="exit"){
+                        break;
+                }
+                if(cmd=="i"){
+                        cin>>data;
+                        if(!s1.isFull()){
+                                s1.push(data);
+                        }
+                }
+                if(cmd=="o"){
+                        if(!s1.isEmpty()){
+                                cout<<s1.pop()<<endl;
+                        }
+                }
+        }
+        return 0;
+}

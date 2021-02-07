@@ -1,0 +1,76 @@
+#include<iostream>
+using namespace std;
+
+class queue{
+        private:
+                int front;
+                int rear;
+                int size;
+                int *store;
+        public:
+                queue(){
+                        front=rear=-1;
+                        size=0;
+                        store=NULL;
+                }
+                queue(int data){
+                        front=rear=-1;
+                        size=data;
+                        store=new int[size];
+                }
+		~queue(){
+			delete[] store;
+		}
+                int isFull(){
+                        if(rear==(size-1))
+                                return 1;
+                                return 0;
+                }
+                int isEmpty(){
+                        if(front==rear)
+                                return 1;
+                                return 0;
+                }
+                void enqueue(int data){
+			rear++;
+			store[rear]=data;
+		}
+		int dequeue(){
+			front++;
+			int data=store[front];
+			if(front==rear){
+				front=rear=-1;			
+			}
+			return data;		
+		}
+};
+
+int main(){
+	queue q(5);
+	int data;
+	string cmd;
+	while(1){
+		cin>>cmd;
+		if(cmd=="exit"){
+			break;
+		}
+		if(cmd=="i"){
+			cin>>data;
+			if(!q.isFull()){
+				q.enqueue(data);
+			}
+			else{
+				cout<<"Full"<<endl;
+			}					
+		}
+		if(cmd=="o"){
+			if(!q.isEmpty()){					
+				cout<<q.dequeue()<<endl;
+			}
+			else{
+				cout<<"Empty"<<endl;
+			}
+		}		
+	}
+return 0;
+}

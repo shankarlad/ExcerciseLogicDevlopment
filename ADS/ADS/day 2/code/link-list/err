@@ -1,0 +1,153 @@
+TLinkList.cpp:38:2: error: invalid use of template-name ‘Node’ without an argument list
+  Node *head;
+  ^~~~
+TLinkList.cpp:38:2: note: class template argument deduction is only available with -std=c++1z or -std=gnu++1z
+TLinkList.cpp:7:7: note: ‘template<class T> class Node’ declared here
+ class Node{
+       ^~~~
+TLinkList.cpp:44:16: error: ‘T’ has not been declared
+   void insertE(T data){
+                ^
+TLinkList.cpp:58:16: error: ‘T’ has not been declared
+   void insertB(T data){
+                ^
+TLinkList.cpp:67:20: error: ‘T’ has not been declared
+   void insertAfter(T tobe, T after){
+                    ^
+TLinkList.cpp:67:28: error: ‘T’ has not been declared
+   void insertAfter(T tobe, T after){
+                            ^
+TLinkList.cpp: In constructor ‘LinkList::LinkList()’:
+TLinkList.cpp:41:4: error: ‘head’ was not declared in this scope
+    head = NULL;
+    ^~~~
+TLinkList.cpp:41:4: note: suggested alternative: ‘fread’
+    head = NULL;
+    ^~~~
+    fread
+TLinkList.cpp: In member function ‘void LinkList::insertE(int)’:
+TLinkList.cpp:45:9: error: missing template arguments before ‘*’ token
+    Node *node = new Node(data);
+         ^
+TLinkList.cpp:45:10: error: ‘node’ was not declared in this scope
+    Node *node = new Node(data);
+          ^~~~
+TLinkList.cpp:45:10: note: suggested alternative: ‘Node’
+    Node *node = new Node(data);
+          ^~~~
+          Node
+TLinkList.cpp:45:21: error: expected type-specifier before ‘Node’
+    Node *node = new Node(data);
+                     ^~~~
+TLinkList.cpp:46:8: error: ‘head’ was not declared in this scope
+    if( head == NULL){
+        ^~~~
+TLinkList.cpp:46:8: note: suggested alternative: ‘fread’
+    if( head == NULL){
+        ^~~~
+        fread
+TLinkList.cpp:49:10: error: missing template arguments before ‘*’ token
+     Node *temp = head;
+          ^
+TLinkList.cpp:49:11: error: ‘temp’ was not declared in this scope
+     Node *temp = head;
+           ^~~~
+TLinkList.cpp:49:11: note: suggested alternative: ‘mktemp’
+     Node *temp = head;
+           ^~~~
+           mktemp
+TLinkList.cpp: In member function ‘void LinkList::insertB(int)’:
+TLinkList.cpp:59:9: error: missing template arguments before ‘*’ token
+    Node *node = new Node(data);
+         ^
+TLinkList.cpp:59:10: error: ‘node’ was not declared in this scope
+    Node *node = new Node(data);
+          ^~~~
+TLinkList.cpp:59:10: note: suggested alternative: ‘Node’
+    Node *node = new Node(data);
+          ^~~~
+          Node
+TLinkList.cpp:59:21: error: expected type-specifier before ‘Node’
+    Node *node = new Node(data);
+                     ^~~~
+TLinkList.cpp:60:8: error: ‘head’ was not declared in this scope
+    if( head == NULL){
+        ^~~~
+TLinkList.cpp:60:8: note: suggested alternative: ‘fread’
+    if( head == NULL){
+        ^~~~
+        fread
+TLinkList.cpp: In member function ‘void LinkList::insertAfter(int, int)’:
+TLinkList.cpp:68:9: error: missing template arguments before ‘*’ token
+    Node *node = new Node( tobe );
+         ^
+TLinkList.cpp:68:10: error: ‘node’ was not declared in this scope
+    Node *node = new Node( tobe );
+          ^~~~
+TLinkList.cpp:68:10: note: suggested alternative: ‘Node’
+    Node *node = new Node( tobe );
+          ^~~~
+          Node
+TLinkList.cpp:68:21: error: expected type-specifier before ‘Node’
+    Node *node = new Node( tobe );
+                     ^~~~
+TLinkList.cpp:69:9: error: missing template arguments before ‘*’ token
+    Node *temp = head;
+         ^
+TLinkList.cpp:69:10: error: ‘temp’ was not declared in this scope
+    Node *temp = head;
+          ^~~~
+TLinkList.cpp:69:10: note: suggested alternative: ‘mktemp’
+    Node *temp = head;
+          ^~~~
+          mktemp
+TLinkList.cpp:69:17: error: ‘head’ was not declared in this scope
+    Node *temp = head;
+                 ^~~~
+TLinkList.cpp:69:17: note: suggested alternative: ‘fread’
+    Node *temp = head;
+                 ^~~~
+                 fread
+TLinkList.cpp: In member function ‘void LinkList::print()’:
+TLinkList.cpp:85:9: error: missing template arguments before ‘*’ token
+    Node *temp = head;
+         ^
+TLinkList.cpp:85:10: error: ‘temp’ was not declared in this scope
+    Node *temp = head;
+          ^~~~
+TLinkList.cpp:85:10: note: suggested alternative: ‘mktemp’
+    Node *temp = head;
+          ^~~~
+          mktemp
+TLinkList.cpp:85:17: error: ‘head’ was not declared in this scope
+    Node *temp = head;
+                 ^~~~
+TLinkList.cpp:85:17: note: suggested alternative: ‘fread’
+    Node *temp = head;
+                 ^~~~
+                 fread
+TLinkList.cpp: In destructor ‘LinkList::~LinkList()’:
+TLinkList.cpp:95:11: error: ‘head’ was not declared in this scope
+    while( head != NULL ){
+           ^~~~
+TLinkList.cpp:95:11: note: suggested alternative: ‘fread’
+    while( head != NULL ){
+           ^~~~
+           fread
+TLinkList.cpp:96:10: error: missing template arguments before ‘*’ token
+     Node *temp = head;
+          ^
+TLinkList.cpp:96:11: error: ‘temp’ was not declared in this scope
+     Node *temp = head;
+           ^~~~
+TLinkList.cpp:96:11: note: suggested alternative: ‘mktemp’
+     Node *temp = head;
+           ^~~~
+           mktemp
+TLinkList.cpp:98:12: error: type ‘<type error>’ argument given to ‘delete’, expected pointer
+     delete temp;
+            ^~~~
+TLinkList.cpp: In function ‘int main()’:
+TLinkList.cpp:105:2: error: ‘LinkList’ is not a template
+  LinkList<int> ll;
+  ^~~~~~~~

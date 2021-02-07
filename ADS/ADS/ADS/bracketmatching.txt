@@ -1,0 +1,129 @@
+#include<iostream>
+#include<cstring>
+using namespace std;
+
+class stack
+{       private:
+            int top;
+            int size;
+            int *store;
+        public:
+            stack()
+            {
+                top=-1;
+                size=0;
+                store=NULL;
+            }
+            stack(int size)
+            {
+                top=-1;
+                this->size=size;
+                store=new int [size];
+            }
+            ~stack()
+            {
+                delete [] store;
+            }
+            int isFull()
+            {
+                if(top==(size-1))
+                {
+                    return 1;
+                }    
+                 else
+                 {
+                     return 0;
+                 }   
+            }
+            int isEmpty()
+            {
+                if(top==-1)
+                {
+                    return 1;
+                }
+                 else
+                 {
+                    return 0; 
+                 }   
+                
+            }
+            void push(char data)
+            {
+                top++;
+                store[top]=data;
+            }
+            char pop()
+            {
+                char data=store[top];
+                top--;
+                return data;
+            }
+};
+int main()
+{   
+    string s;
+    int n,i,j;
+    cin>>n;
+    for(i=1;i<=n;i++)
+    {
+        cin>>s;
+        stack s1(s.length());
+        int c=0;
+        for(j=0;j<s.length();j++)
+        {
+            if(s[j]=='(' || s[j]=='[' || s[j]=='{')
+            {
+                s1.push(s[j]);
+            }
+            else if(s1.isEmpty())
+            {
+                c=1;
+               // cout<<"FALSE"<<endl;
+                break;
+            }
+            else if(s[j]==')')
+            {
+                char c1=s1.pop();
+                if(c1!='(')
+                {
+                    c=1;
+                 //   cout<<"FALSE"<<endl;
+                    break;
+                }
+            }
+            else if(s[j]==']')
+            {
+                char c1=s1.pop();
+                if(c1!='[')
+                {
+                    c=1;
+                   // cout<<"FALSE"<<endl;
+                    break;
+                }
+            }
+            else if(s[j]=='}')
+            {
+                char c1=s1.pop();
+                if(c1!='{')
+                {
+                    c=1;
+                    //cout<<"FALSE"<<endl;
+                    break;
+                }
+            }
+            else
+            {
+                continue;
+            }
+        }
+        if(s1.isEmpty() && c==0)
+        {
+            cout<<"TRUE"<<endl;
+        }
+        else
+        {
+            cout<<"FALSE"<<endl;
+        }
+    }
+return 0;    
+}

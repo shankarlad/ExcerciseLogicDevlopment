@@ -1,0 +1,155 @@
+#include<iostream>
+#include<cstring>
+
+using namespace std;
+
+class Node
+{   
+    private:
+        int age;
+        char name[100];
+        Node *next;
+    public:
+        Node()
+        {
+            age=0;
+            name[100]='\0';
+            next=NULL;
+        }
+        Node(const char name[],int age)
+        {
+            strcpy(this->name,name);
+            this->age=age;
+            this->next=NULL;
+        }
+        int getage()
+        {
+            return age;
+        }
+        char *getname()
+        {
+            return name;
+        }
+        Node *getnext()
+        {
+            return next;
+        }
+        void setnext(Node *next)
+        {
+            this->next=next;
+        }
+
+};
+class Info
+{
+    private:
+        Node *head;
+    public:
+        Info()
+        {
+            head=NULL;
+        }
+        ~Info()
+        {
+           
+        }
+        void addinfo(char name[],int age)
+        {
+            Node *node=new Node(name,age);
+            if(head==NULL)
+            {
+                head=node;                         //initial case
+            }
+            else
+            {   
+                Node *temp=head;
+                Node *pr=head;
+                while(temp->getage()<=age && temp->getnext()!=NULL)
+                {
+                    pr=temp;
+                    temp=temp->getnext();       //traversing
+                }
+                if(age<temp->getage())
+                {
+                    if(temp==head)
+                    {
+                        node->setnext(temp);   //insert before
+                        head=node;
+                    }
+                    else
+                    {
+                        node->setnext(temp);   //insert between
+                        pr->setnext(node);
+                    }
+                }
+                else
+                {
+                    temp->setnext(node);     //insert end;
+                    node->setnext(NULL);
+                }
+                
+            }
+        }
+        void Remove(int data)
+        {
+            Node *temp1=head;
+            if(data==1)
+            {
+                head=temp1->getnext();
+                delete temp1;
+                return;
+            }
+           else
+            {
+                for(int i=0;i<data-2;i++)
+                    temp1=temp1->getnext();
+                    Node *temp2=temp1->getnext();
+                    temp1->setnext(temp2->getnext());
+                    delete temp2;
+            }
+        }
+        
+        void print(int data)
+        {
+            int count=1;
+            Node *temp=head;
+            while(data!=count)
+            {
+
+                temp=temp->getnext();
+                count++;
+            }
+           cout<<temp->getname()<<" "<<temp->getage()<<endl;
+        }
+};
+int main()
+{
+    Info s;
+    string cmd;
+    char a[100];
+    int b;
+    while(1)
+    {
+        cin>>cmd;
+        if(cmd=="insert")
+        {
+            cin>>a;
+            cin>>b;
+            s.addinfo(a,b);
+        }
+        if(cmd=="print")
+        {
+            cin>>b;
+            s.print(b);
+        }
+        if(cmd=="remove")
+        {
+            cin>>b;
+           s.Remove(b);
+        }
+        if(cmd=="stop")
+        {
+            break;
+        }
+    }
+}

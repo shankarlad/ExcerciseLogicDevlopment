@@ -1,0 +1,141 @@
+#include<iostream>
+#include<stdlib.h>
+using namespace std;
+
+class node
+{
+private:
+    int data;
+    node * left;
+    node * right;
+public:
+    node(int data)
+    {
+        this->data=data;
+        right=NULL;
+        left=NULL;
+    }
+    int getdata()
+    {
+        return data;
+    }
+    node * getleft()
+    {
+        return left;
+    }
+    node * getright()
+    {
+        return  right;
+    }
+    void setright(node *right)
+    {
+        this->right=right;
+    }
+
+     void setleft(node *left)
+    {
+        this->left=left;
+    }
+};
+
+class BST
+{
+private:
+    node *root;
+public:
+    BST()
+    {
+        root=NULL;
+    }
+    node * getroot()
+    {
+        return this->root;
+    }
+    int  insertend(int data)
+    {
+        node * Node =new node(data);
+        node * temp=root;
+        node * prev;
+
+        if(root==NULL)
+        {
+            root=Node;
+
+        }
+        else
+	{
+		while(temp!=NULL)
+       		 {
+
+               	 if(temp->getdata()>data)
+                {
+                    prev=temp;
+                    temp=temp->getleft();
+                }
+                else
+                {
+                	    prev=temp;
+             	       temp=temp->getright();
+                }
+
+       		 }
+        	if(prev->getdata()>data)
+         	   {
+          	      prev->setleft(Node);
+          	  }
+       		 else
+           	 {
+             	   prev->setright(Node);
+           	 }
+	}
+
+}
+
+bool printLevel(node* root, int level)
+{
+    if (root == NULL)
+        return false;
+
+    if (level == 1)
+    {
+        cout << root->getdata() << " ";
+
+        return true;
+    }
+
+    bool left = printLevel(root->getleft(), level - 1);
+    bool right = printLevel(root->getright(), level - 1);
+
+    return left || right;
+}
+
+void levelOrderTraversal(node* root)
+{
+    
+    int level = 1;
+    while (printLevel(root, level))
+    {
+    	cout<<endl;
+        level++;
+    }
+}
+
+
+
+};
+
+
+int main()
+{
+    string s;
+    BST b;
+    int data;
+    while(data!=-1)
+    {
+        cin>>data;
+        if(data!=-1)
+            b.insertend(data);
+    }
+    b.levelOrderTraversal(b.getroot());
+    return 0;
+}

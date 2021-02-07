@@ -1,0 +1,190 @@
+#include<iostream>
+#include<cstring>
+
+using namespace std;
+
+class Node
+{   
+    private:
+        int age;
+        char name[20];
+        Node *next;
+    //    Node *prev;
+    public:
+        Node()
+        {
+            age=0;
+            name[20]='\0';
+            next=NULL;
+      //      prev=NULL;
+        }
+        Node(const char name[],int age)
+        {
+            strcpy(this->name,name);
+            this->age=age;
+            this->next=NULL;
+        //    this->prev=NULL;
+        }
+        int getage()
+        {
+            return age;
+        }
+        char *getname()
+        {
+            return name;
+        }
+        Node *getnext()
+        {
+            return next;
+        }
+/*        Node *getprev()
+        {
+            return prev;
+        }*/
+        void setnext(Node *next)
+        {
+            this->next=next;
+        }
+/*        void setprev(Node *prev)
+        {
+            this->prev=prev;
+        }*/
+};
+class Info
+{
+    private:
+        Node *head;
+    public:
+        Info()
+        {
+            head=NULL;
+        }
+        ~Info()
+        {
+            delete [] head;   
+        }
+        void addinfo(char name[],int age)
+        {
+            Node *node=new Node(name,age);
+            Node *temp;
+            if(head==NULL || head->getage()>=age)
+            {
+                node->setnext(head);
+                head=node;
+            }
+            else
+            {
+                temp=head;
+                while(temp!=NULL && temp->getage()<age)
+                {
+                    temp=temp->getnext();    
+                }
+                node->setnext(temp->getnext());
+                temp->setnext(node);
+            }
+        }
+        /*void addinfo(char name[],int age)
+        {
+            Node *node=new Node(name,age);
+            Node *temp=head;
+            if(head==NULL)
+            {
+                head=node;
+            }
+            else if(age<temp->getage())
+            {
+                node->setnext(temp);
+                temp->setprev(node);
+                node->setprev(NULL);
+                head=node;
+            }
+            else
+            {
+                while(temp->getnext()!=NULL)
+                {
+                    temp=temp->getnext();
+                    temp->setnext(node);
+                    node->setprev(temp);
+                    node->setnext(NULL);
+                }    
+            }
+            
+        }*/
+        /*{
+            /*Node *node=new Node(name,age);
+            if(head==NULL)
+            {
+                head=node;
+            }
+            else
+            {   
+                Node *temp=head;
+                Node *pr=head;
+                while(temp->getage()<=age)
+                {
+                    pr=temp;
+                    temp=temp->getnext();
+                }
+                if(age<temp->getage())
+                {
+                    if(temp==head)
+                    {
+                        node->setnext(temp);
+                        pr->setprev(NULL);
+                        head=node;
+                    }
+                    else
+                    {
+                        node->setnext(temp);
+                        pr->setnext(node);
+                    }
+                }
+                else
+                {
+                    temp->setnext(node);
+                }
+                
+            }
+        }*/
+        void print(int data)
+        {
+            int count=1;
+            Node *temp=head;
+            while(data!=count)
+            {
+              //  cout<<temp->getname()<<" "<<temp->getage()<<endl;
+
+                temp=temp->getnext();
+                count++;
+            //    cout<<temp->getname()<<" "<<temp->getage()<<endl;
+            }
+           cout<<temp->getname()<<" "<<temp->getage()<<endl;
+           // cout<<endl;
+        }
+};
+int main()
+{
+    Info s;
+    string cmd;
+    char a[20];
+    int b;
+    while(1)
+    {
+        cin>>cmd;
+        if(cmd=="insert")
+        {
+            cin>>a;
+            cin>>b;
+            s.addinfo(a,b);
+        }
+        if(cmd=="print")
+        {
+            cin>>b;
+            s.print(b);
+        }
+        if(cmd=="stop")
+        {
+            break;
+        }
+    }
+}

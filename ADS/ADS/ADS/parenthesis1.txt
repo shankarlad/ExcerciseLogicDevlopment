@@ -1,0 +1,145 @@
+include<iostream>
+#include<cstring>
+#include<stdlib.h>
+
+using namespace std;
+
+
+class Stack
+{
+    
+    private:
+            int top;
+            int size;
+            char* store;
+            
+    public:
+            Stack(int size)
+            {
+                         top=-1;
+                         this->size=size;
+                         store=new char[size];
+            }
+            
+            int isFull()
+            {
+                if(top==size-1)
+                    return 1;
+       	            return 0;
+            }
+            
+            int isEmpty()
+            {
+                if(top==-1)
+                    return 1;
+                return 0;
+            }
+            
+            char push(char data)
+            {
+                if(!(IsFull()))
+                    {
+                        top++;
+                        store[top]=data;
+                        cout<<store[top]<<endl;
+                    }
+                    return store[top];
+            }
+            
+            char pop()
+            {
+                if(!(IsEmpty()))
+                    {
+                        char pval;
+                        pval=store[top];
+                        top--;
+                        return pval;
+                    }
+            }
+            
+
+
+};
+
+int main()
+{
+    int no,i,j,k;
+    cin>>no;
+    
+    string cmd[no];
+    
+    Stack stk(20);
+    
+    for(i=0;i<no;i++)
+    {
+        cin>>cmd[i];
+    }
+    
+    for(k=0;k<no;k++)
+    {
+        string cd;
+        cd=cmd[k];
+        
+        int count1=0;
+        int count2=0;
+        
+        int p=cd.size();
+        
+        char c_arr[p+1];
+        
+        strcpy(c_arr,cd.c_str());
+        
+        for(j=0;j<p;j++)
+        {
+            char ch[p];
+            ch[j]=c_arr[j];
+            cout<<ch[j]<<endl;
+
+            if(ch[j]=='{' || ch[j]=='[' || ch[j]== '(')
+            {
+                char cpy= stk.push(ch[j]);
+                cout<<"pushed="<<cpy<<endl;
+                count1++;
+                cout<<"pushcounter="<<count1<<endl;
+            }
+            else if (ch[j]=='}' || ch[j]==')' || ch[j]==']')
+            {
+                char cmp;
+                cmp=stk.pop();
+                cout<<"poped="<<cmp<<endl;
+                if(cmp=='{' && ch[j]=='}')
+                    {
+                        count1--;
+                        cout<<"popcounter1="<<count1<<endl;
+                    }
+                else if(cmp=='['&& ch[j]==']')
+                    {
+                        count1--;
+                        cout<<"popcount1"<<count1<<endl;
+                    }
+                    else if(cmp=='(' && ch[j]==')')
+                    {
+                        count1--;
+                        cout<<"popcount1"<<count1<<endl;
+                    }
+                else 
+                    {
+                        count2++;
+                        cout<<"count2="<<count2<<endl;
+                    }
+                    
+            }
+
+        }
+        
+        
+        if(count1==0 && count2==0)
+            cout<<"TRUE"<<endl;
+        else
+            cout<<"FALSE"<<endl;
+        
+    }
+    
+    
+    return 0;
+}

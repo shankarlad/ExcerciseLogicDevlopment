@@ -1,0 +1,168 @@
+#include<iostream>
+#include<cstring>
+
+using namespace std;
+
+    int aray[20];
+    int i=0;
+    int bray[20];
+    int j=0;
+
+class Node
+{
+    private:
+        int data;
+        Node *left;
+        Node *right;
+    public:
+        Node(int data)
+        {
+            this->data=data;
+            left=NULL;
+            right=NULL;
+        }
+        /*void print()
+        {
+            cout<<data<<" ";
+        }*/
+        int getdata()
+        {
+            return data;
+        }
+        void setleft(Node *left)
+        {
+            this->left=left;
+        }
+        void setright(Node *right)
+        {
+            this->right=right;
+        }
+        Node *getleft()
+        {
+            return left;
+        }
+        Node *getright()
+        {
+            return right;
+        }
+};
+class BST
+{
+    private:
+        Node *root;
+    public:
+        BST()
+        {
+            root=NULL;
+        }
+        Node *getroot()
+        {
+            return root;
+        }
+        void insert(int data)
+        {
+            Node *node=new Node(data);
+            if(root==NULL)
+            {
+                root=node;
+            }
+            else
+            {
+                Node *temp=root;
+                Node *prev=root;
+                while(temp!=NULL)
+                {
+                    prev=temp;
+                    if(data<=temp->getdata())
+                    {
+                        temp=temp->getleft();
+                    }
+                    else
+                    {
+                        temp=temp->getright();
+                    }
+                }
+                if(data<=prev->getdata())
+                {
+                    prev->setleft(node);
+                }
+                else
+                {
+                    prev->setright(node);
+                }
+            }
+        }
+        int inorder(Node *root)
+        {
+            //int a[8];
+            //int i=0;    
+            if(root==NULL)
+            {
+                return 0;
+            }
+            else
+            {
+                //Node *temp=root;
+                inorder(root->getleft());
+                //cout<<temp->getdata()<<" ";
+                aray[i]=root->getdata();
+                i++;
+                inorder(root->getright());
+            }
+        }
+        /*int inprint()
+        {
+            return inorder(root);
+        }*/
+        int preorder(Node *root)
+        {
+            //int b[8];
+            //int j=0;
+            if(root==NULL)
+            {
+                return 0;
+            }
+            else
+            {
+                //Node *temp=root;
+                //cout<<temp->getdata()<<" ";
+                bray[j]=root->getdata();
+                j++;
+                preorder(root->getleft());
+                preorder(root->getright());
+            }
+        }
+        /*int preprint()
+        {
+            return preorder(root);
+        }*/
+};
+int main()
+{
+    BST b;
+    int data;
+    while(1)
+    {
+        cin>>data;
+        if(data==-1)
+        {
+            break;
+        }   
+    b.insert(data);
+    }
+    //b.inprint();
+    //cout<<endl;
+    //b.preprint();
+    b.inorder(b.getroot());
+    cout<<endl;
+    b.preorder(b.getroot());
+    cout<<endl;
+    for(int a=0;a<i;a++)
+    {
+        if(aray[a]==bray[a])
+        {
+            cout<<a+1<<" "<<aray[a]<<endl;
+        }
+    }
+    return 0;
+}

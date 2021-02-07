@@ -1,0 +1,198 @@
+#include<iostream>
+#include<math.h>
+
+using namespace std;
+
+class Node
+{
+    private:
+        int data;
+        Node *left;
+        Node *right;
+        
+    public:
+        Node()
+        {
+            left=right=NULL;
+        }
+        
+        Node(int data)
+        {
+            this->data=data;
+            left=right=NULL;
+        }
+        
+        void setdata(int data)
+        {
+            this->data=data;
+            left=right=NULL;
+        }
+        
+        int getdata()
+        {
+            return data;
+        }
+        
+        Node *getleft()
+        {
+            return left;
+        }
+        
+        Node *getright()
+        {
+            return right;
+        }
+        
+        void setleft(Node *left)
+        {
+            this->left=left;
+        }
+        
+        void setright(Node *right)
+        {
+            this->right=right;
+        }
+};
+
+class BST
+{
+      private:
+        Node *root;
+        int avlcnt;
+        
+    public:
+        BST()
+        {
+            root=NULL;
+            avlcnt=0;
+        }
+        
+        Node *getroot()
+        {
+            return root;
+        }
+        
+        int getavl()
+        {
+            return avlcnt;
+        }
+        
+        int height(Node *temp)
+        {
+            if(temp==NULL)
+            {
+                return 0;
+            }
+            return max(height(temp->getleft()),height(temp->getright()))+1;
+        }
+        
+        Node *findavl(Node *root)
+        {
+            if(root!=NULL)
+            {
+                int bf=height(root->getleft())-height(root->getright());
+                
+                if(bf<0)
+                {
+                    bf=-bf;
+                }
+                if(bf>1)
+                {
+                    return root;
+                }
+                
+                Node *node=findavl(root->getleft());
+                if(node!=NULL)
+                {
+                    return node;
+                }
+                
+                node=findavl(root->getright());
+                if(node!=NULL)
+                {
+                    return node;
+                }
+            }
+            
+            return NULL;
+        }
+        
+        int avlvio()
+        {
+            Node *node=findavl(root);
+            if(node==NULL)
+                return 0;
+            else
+                return 1;
+        }
+        
+        void insert(int data)
+        {
+            Node *node=new Node(data);
+            
+            if(root==NULL)
+            {
+                root=node;
+            }
+            
+            else
+            {
+                Node *temp=root;
+                Node *prev=NULL;
+                
+                while(temp!=NULL)
+                {
+                    prev=temp;
+                    if(data < temp->getdata())
+                        temp=temp->getleft();
+                    else if(data > temp->getdata())
+                        temp=temp->getright();
+                    else
+                    {
+                        break;
+                    }
+                }
+                
+                if(data < prev->getdata())
+                {
+                    prev->setleft(node);
+                    if(avlvio())
+                    {
+                        avlcnt++;
+                        prev->setleft(NULL);
+                        cout<<data<<" ";
+                    }
+                }
+                
+                else if(data > prev->getdata())
+                {
+                    prev->setright(node);
+                    if(avlvio())
+                    {
+                        avlcnt++;
+                        prev->setright(NULL);
+                        cout<<data<<" ";
+                    }
+                }
+                
+                else 
+                    return;
+            }
+        }
+};
+
+int main()
+{
+    BST b;
+    int n;
+    while(n!=-1)
+    {
+        cin>>n;
+        if(n!=-1)
+            b.insert(n);
+    }
+    
+    cout<<b.getavl()<<" ";
+    
+    return 0;
+}

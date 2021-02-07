@@ -1,0 +1,325 @@
+#include <iostream>
+
+using namespace std;
+
+#ifndef __LINKLIST__
+#define __LINKLIST__
+
+template <class T>
+
+class Node
+{
+	private:
+	T data;
+	Node<T> *next;
+	public:
+		Node()
+		{ 
+		next = NULL; 
+		}
+		
+		~Node()
+		{
+			next = NULL;
+		}
+
+		Node(T data)
+		{
+			this->data = data;
+			this->next = NULL;
+		}
+	
+		T getData()
+		{
+			return data;
+		}	
+
+		Node* getNext()
+		{
+			return next;
+		}
+		
+		void setNext(Node * next)
+		{
+			this->next = next;
+		}
+};
+
+template<class T>
+
+class LinkList
+{	
+	private:
+	Node<T> *head;
+	public:
+		LinkList()
+		{
+			head = NULL;
+		}
+
+		void insertE(T data)
+		{
+			Node<T> *node = new Node<T>(data);
+			if( head == NULL)
+			{
+				head = node;
+			}
+			else
+			{
+				Node<T> *temp = head;
+				while( temp->getNext() != NULL)
+				{
+					temp = temp->getNext();	
+				}
+				temp->setNext( node );
+
+			}
+		}	
+
+		void insertB(T data)
+		{
+			Node<T> *node = new Node<T>(data);
+			if( head == NULL)
+			{
+				head = node;
+			}
+			else
+			{
+				node->setNext(head);	
+				head = node;        	
+			}
+		}	
+
+		int isFull()
+		{
+			Node<T> *node = new Node<T>();
+			if( node != NULL)
+			{
+			    delete node;
+			    return 0;                   
+			}
+			return 1;
+		}
+
+		int isEmpty()
+		{
+			if(head == NULL)
+				return 1;
+			return 0;
+		}
+		
+		T deleteB()
+		{
+			Node<T>* temp = head;
+			head = head->getNext();
+		return temp->getData();	 
+		}
+		
+		void insertAfter(T tobe, T after)
+		{
+			Node<T> *node = new Node<T>( tobe );
+			Node<T> *temp = head;
+			while( temp != NULL && temp->getData() != after)
+			{
+				temp = temp->getNext(); 
+
+			}
+			if( temp== NULL)
+			{
+				cout<<"Data Not Found"<<endl;
+			}
+			else
+			{
+				node->setNext( temp->getNext());
+				temp->setNext(node);
+
+			}
+		}
+
+		void print()
+		{
+			Node<T> *temp = head;
+			while( temp != NULL)
+			{
+				cout<<temp->getData()<<"->";
+				temp = temp->getNext();	
+			}
+			cout<<endl;
+
+		}
+
+		~LinkList()
+		{
+			while( head != NULL )
+			{
+				Node<T> *temp = head;
+				head = head->getNext();
+				delete temp;
+			}
+		}	
+
+};
+#endif
+===========================================================================
+#include <iostream>
+#include "LinkList.cpp"	
+using namespace std;
+
+#ifndef __STACK__
+#define __STACK__
+
+template<class T>
+
+class stack
+{
+
+	private:
+		LinkList<T> store;
+	public:
+		stack()
+		{
+		}
+		
+		int isFull()
+		{
+			if( store.isFull() )
+			{
+				cout<<"Stack is Full"<<endl;	
+				return 1;
+			}
+			return 0;
+		}
+		
+		int isEmpty()
+		{
+			if( store.isEmpty() )
+			{
+				cout<<"Stack is Empty"<<endl;	
+				return 1;
+			}
+			return 0;
+		}
+
+		void push(T data)
+		{
+			store.insertB( data );
+		}
+		
+		T pop()
+		{
+			return store.deleteB();
+		}
+
+};
+#endif
+=========================================================================
+#include "stack.cpp"
+#include "LinkList.cpp"
+
+int main(){
+
+	stack<string> stk;
+	stk.push("manish");	
+	stk.push("prakash");	
+	stk.push("anil");	
+	stk.push("raushan");	
+	stk.push("arvind");	
+	stk.push("virat");	
+	
+	cout<<stk.pop()<<endl;
+	cout<<stk.pop()<<endl;
+	cout<<stk.pop()<<endl;
+	cout<<stk.pop()<<endl;
+	cout<<stk.pop()<<endl;
+	cout<<stk.pop()<<endl;
+	if( !stk.isEmpty() ){
+		cout<<stk.pop()<<endl;
+	}
+	
+	LinkList<int> ll;
+	ll.insertB(10);
+	ll.insertB(11);
+	ll.insertB(12);
+	ll.insertE(13);
+	ll.insertE(14);
+	ll.print();
+	ll.deleteB();
+	ll.print();
+
+return 0;
+}
+========================================================
+#include<iostream>
+#include "LinkList.cpp"
+using namespace std;
+
+#ifndef___QUEUE___
+#define___QUEUE___
+
+template<class T>
+
+class queue{
+        private:
+                LinkList<T> store;
+        public:
+                queue()
+		{       
+                }
+                int isFull()
+		{
+                        if(store.isFull())
+ 				return 1;
+				return 0;                               
+                }
+                int isEmpty()
+		{
+                        if(store.isEmpty())
+                                return 1;
+                                return 0;
+                }
+                void enqueue(T data)
+		{
+			store.insertB(data);
+		}
+		T dequeue()
+		{
+			return store.deleteB();		
+		}
+};
+#endif
+================================================================================
+#include "qll2.cpp"
+#include "sll1.cpp"
+
+int main(){
+
+        stack<string> stk;
+        stk.enqueue("manish");
+        stk.enqueue("prakash");
+        stk.enqueue("anil");
+        stk.enqueue("raushan");
+        stk.enqueue("arvind");
+        stk.enqueue("virat");
+
+        cout<<stk.dequeue()<<endl;
+        cout<<stk.dequeue()<<endl;
+        cout<<stk.dequeue()<<endl;
+        cout<<stk.dequeue()<<endl;
+        cout<<stk.dequeue()<<endl;
+        cout<<stk.dequeue()<<endl;
+        if( !stk.isEmpty() ){
+                cout<<stk.dequeue()<<endl;
+        }
+
+        LinkList<int> ll;
+        ll.insertB(10);
+        ll.insertB(11);
+        ll.insertB(12);
+        ll.insertE(13);
+        ll.insertE(14);
+        ll.print();
+        ll.deleteB();
+        ll.print();
+
+return 0;
+}

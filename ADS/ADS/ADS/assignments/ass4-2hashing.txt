@@ -1,0 +1,69 @@
+#include<iostream>
+
+using namespace std;
+
+class Hash
+{
+    private:
+        int bucket;
+        int *table;
+    public:
+        Hash()
+        {
+            table=NULL;
+            bucket=0;
+        }
+        Hash(int bucket)
+        {
+            this->bucket=bucket;
+            table=new int[bucket];
+        //    for(int i=0;i<bucket;i++)
+          //      table[i]=-1;
+        }
+        int insert(int data)
+        {
+            int index=hashfun(data);
+        //    if(table==NULL)
+            cout<<index<<" "<<endl;
+         //   else
+        //    fun1(data);
+        }
+        int hashfun(int data)
+        {
+            return (data % bucket);
+                        
+        }
+        int fun1(int data)
+        {
+            if(table==NULL)
+            insert(data);
+            else
+            fun2(data);
+        }
+        int fun2(int data)
+        {
+            data=data/10;
+            insert(data);
+        }
+        /*int display(int data)
+        {
+            cout<<insert(int data);
+        }*/
+};
+int main()
+{   
+    int buk,i;
+    cin>>buk;
+    Hash h(buk);
+    while(1)
+    {
+        cin>>i;
+        if(i==-1)
+        {
+            break;
+        }
+        h.insert(i);
+    }
+    //h.display(i);
+    return 0;
+}

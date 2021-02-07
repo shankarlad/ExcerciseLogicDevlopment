@@ -1,0 +1,132 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <bits/stdc++.h>
+using namespace std;
+
+class Node  
+{
+    private:
+        int data;
+        Node *left;
+        Node *right;
+    public:
+        Node(int data)
+        {
+            this->data=data;
+            left=right=NULL;
+        }
+        int getdata()
+        {
+            return data;
+        }
+        Node *getleft()
+        {
+            return left;
+        }
+        Node *getright()
+        {
+            return right;
+        }
+        void setleft(Node *left)
+        {
+            this->left=left;
+        }
+        void setright(Node *right)
+        {
+            this->right=right;
+        }
+};
+class BST
+{
+    private:
+        Node *root;
+    public:
+        BST()
+        {
+            root=NULL;
+        }
+               Node *getroot()
+        {
+            return root;
+        }
+        
+        void Insert(int data)
+        {
+            Node *node=new Node(data);
+            
+            if(root==NULL)
+            {
+                root=node;
+            }
+            else
+            {
+                Node *temp=root;
+                Node *prev=root;
+                
+                while(temp!=NULL)
+                {
+                    prev=temp;
+                    if(data<=temp->getdata())
+                        temp=temp->getleft();
+                        temp=temp->getright();
+                }
+                if(data<=prev->getdata())
+                        prev->setleft(node);
+                        prev->setright(node);
+            }
+        }
+        
+        int checkBST(Node *X, int &pre)
+        {
+            if(X==NULL)
+            {
+                return 1;
+            }
+            if(!(checkBST(X->getleft(),pre)))
+            {
+                return 0;
+            }
+            if(X->getdata() < pre)
+            {
+                return 0;
+            }
+            pre=X->getdata();
+            
+            return checkBST(X->getright(),pre);
+        }
+    
+        void display()
+        {
+            int c;
+            int pre=INT_MIN;
+            cout<<"builting the binary tree like example 1......"<<endl; 
+           // checkBST(getroot(),pre);
+            if(checkBST(getroot(),pre))
+                 cout<<"This binary tree is binary search tree"<<endl;
+            else
+                 cout<<"This is not a binary search tree";
+        }
+};
+
+
+int main() 
+{
+   
+    BST b;
+    
+    cout<<"Tree is built like the example 1 aforesaid"<<endl;
+    
+    int n,m;
+  //  cin>>n;
+    for(int i=0;i<9;i++)
+    {
+        cin>>m;
+        b.Insert(m);
+    }
+    b.display();
+    
+    return 0;
+}

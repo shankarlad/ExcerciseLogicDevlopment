@@ -1,0 +1,106 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+class Node 
+{
+    private:
+        int data;
+        Node *left;
+        Node *right;
+    public:
+        Node()
+        {
+            data=0;
+            left=right=NULL;
+        }
+        int getdata()
+        {
+            return data;
+        }
+        Node *getleft()
+        {
+            return left;
+        }
+        Node *getright()
+        {
+            return right;
+        }
+        void setleft(Node *left)
+        {
+            this->left=left;
+        }
+        void setright(Node *right)
+        {
+            this->right=right;
+        }
+};
+
+class Tree
+{
+    private:
+        Node *root;
+    public:
+        Tree()
+        {
+            root=NULL;
+        }
+        Node *getroot()
+        {
+            return root;
+        }
+        void insert(int data)
+        {
+            Node *node=new Node(data);
+            
+            if(root==NULL)
+            {
+                root=node;
+            }
+            else
+            {
+                Node *temp=root;
+                Node *Prev=NULL;
+                while(temp!=NULL)
+                {
+                    prev=temp;
+                    if(data <= temp->getdata())
+                        temp=temp->getleft();
+                        temp=temp->getright();
+                }
+                    
+                if(data <= prev->getdata())
+                    prev->setleft(node);
+                    prev->setright(node);
+            }
+        }
+    
+    void Inorder(Node *root)
+    {
+        if(root==NULL)
+            return 0;
+        else
+        {
+            Inorder(root->getleft());
+            cout<<root->getdata()<<" ";
+            Inorder(root->getright());
+        }
+    }
+};
+
+int main()
+{
+    Tree t;
+    for(int i=0;i<3;i++)
+    {
+	int n;
+        cin>>n;
+        t.insert(n);
+    }
+    t.Inorder(getroot());
+        
+    return 0;
+}

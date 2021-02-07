@@ -1,0 +1,142 @@
+#include<iostream>
+#include<cstring>
+using namespace std;
+
+class Node
+{
+    private:
+        int data;
+        Node *left;
+        Node * right;
+    public:
+        Node(int data)
+        {
+            this->data=data;
+            left=NULL;
+            right=NULL;
+        }
+        int getdata()
+        {
+            return data;
+        }
+        Node *getleft()
+        {
+            return left;
+        }
+        Node *getright()
+        {
+            return right;
+        }
+        void setleft(Node *left)
+        {
+            this->left=left;
+        }
+        void setright(Node *right)
+        {
+            this->right=right;
+        }
+};
+class BST
+{
+    private:
+        Node *root;
+    public:
+        BST()
+        {
+            root=NULL;
+        }
+        void travers(int data)
+        {
+            Node *node=new Node(data);
+            if(root==NULL)
+            {
+                root=node;
+            }
+            else
+            {
+                Node *temp=root;
+                Node *prev=NULL;
+                while(temp!=NULL)
+                {
+                    prev=temp;
+                    if(data<=temp->getdata())
+                        temp=temp->getleft();
+                    else
+                        temp=temp->getright();
+                }
+                if(data<=prev->getdata())
+                    prev->setleft(node);
+                else
+                    prev->setright(node);
+            }
+        }
+         void print(int data)
+         {
+             string s;
+             Node *temp=root;
+             if(data==temp->getdata())
+             {
+                 s="Root";
+             }
+             if(data<=temp->getdata())
+             {
+                 s="";
+                 s="Root";
+                 while(temp!=NULL && temp->getdata()!=data)
+                 {
+                     if(data<temp->getdata())
+                     {
+                        temp=temp->getleft();
+                        s=s+"L";
+                     }
+                     else
+                     {
+                         temp=temp->getright();
+                         s=s+"R";
+                     }
+                 }
+             }
+             else
+             {
+                 s="";
+                 s="Root";
+                 while(temp!=NULL && temp->getdata()!=data)
+                 {
+                     if(data>temp->getdata())
+                     {
+                        temp=temp->getright();
+                        s=s+"R";
+                     }
+                     else
+                     {
+                         temp=temp->getleft();
+                         s=s+"L";
+                     }         
+                }
+             }
+             if(temp==NULL)
+             cout<<"Not Found"<<endl;
+             else
+             cout<<s<<endl;
+         }
+        
+};
+int main()
+{
+
+    BST b;
+    int n;
+    while(n!=-1)
+    {
+        cin>>n;
+        b.travers(n);
+    }
+    int a,c;
+    cin>>a;
+    for(int i=1;i<=a;i++)
+    {
+        cin>>c;
+        b.print(c);
+    }
+    return 0;
+}

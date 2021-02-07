@@ -1,0 +1,97 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+int n=1;
+
+class Node 
+{
+    private:
+        int data;
+        Node *left;
+        Node * right;
+    public:
+        Node(int data)
+        {
+            this->data=data;
+            left=NULL;
+            right=NULL;
+        }
+        int getdata()
+        {
+            return data;
+        }
+        Node *getleft()
+        {
+            return left;
+        }
+        Node *getright()
+        {
+            return right;
+        }
+        void setleft(Node *left)
+        {
+            this->left=left;
+        }
+        void setright(Node *right)
+        {
+            this->right=right;
+        }
+};
+class BST
+{
+    private:
+        Node *root;
+    public:    
+        BST()
+        {
+            root=NULL;
+        }
+        
+ 	
+        
+        int CountNode(Node *x)
+        {
+            
+            
+            if(x==NULL)
+                return 0;
+            
+            if(x->getleft()!=NULL)
+                n=n+1;
+                CountNode(x->getleft());            
+
+            if(x->getright()!=NULL)
+                n=n+1;
+                CountNode(x->getright());
+            
+            return n;
+        }
+    
+        void display()
+        {
+            cout<<"Total No. of Nodes in the BST = "<<CountNode(getroot());   
+        }
+    
+};
+
+
+int main()
+{
+    BST b;
+    
+    b.Insert(3);
+    b.Insert(4);
+    b.Insert(2);
+    b.Insert(5);
+    b.Insert(1);
+    
+    b.display();
+    
+    
+    
+    return 0;
+}

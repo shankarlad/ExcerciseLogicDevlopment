@@ -1,0 +1,130 @@
+#include<iostream>
+#include<cstring>
+using namespace std;
+
+class Node
+{	private;
+		int age;
+		char name[20];
+		Node *next;
+	public:
+		Node()
+		{
+			next=NULL;
+			name[20]='\0';
+			age=0;
+		}
+		Node(char name[],int age)
+		{
+			strcpy(this->name=name);
+			this->age=age;
+			next=NULL;
+		}
+		int *getname()
+		{
+			return name;
+		}
+		int getage()
+		{
+			return age;
+		}
+		Node *getnext()
+		{
+			return next;
+		}
+		void setnext(Node *next)
+		{
+			this->next=next;
+		}
+		
+};
+
+class LL
+{
+	private:
+		Node *head;
+	public:
+		LL()
+		{
+			head=NULL;
+		}
+		void insert(char name[],int age)
+		{
+			Node *node=new Node(name,age);
+			if(head==NULL)
+			{
+				head=node;
+			}
+			else
+node
+			{
+				Node *temp=head;
+				Node *prev=head;
+				while(temp!=NULL && temp->getage()<=age)
+				{
+					prev=temp;
+					temp=temp->getnext();			
+				}
+				if(age<temp->getage())
+				{
+					if(temp==head)
+					{
+						node->setnext(temp);
+					}	head=node;
+				
+					else
+					{
+						node->setnext(temp);
+						prev->setnext(node);
+					}
+				}
+				else
+				{
+					temp->setnext(node);
++				}
+			}
+		}
+		void delete1(int count)
+		{
+		}
+		void print(int data)
+		{
+			int count=1;
+			Node *temp=head;
+			while(count!=data)
+			{
+				temp=temp->getnext();
+				count++;
+			}
+			cout<<temp->getname()<<" "<<temp->getage()<<endl;
+			cout<<endl;
+		}
+};
+int main()
+{
+	LL l;
+	string s;
+	char a[20];
+	int b;
+	while(1)
+	{
+
+		cin>>s;
+		if(s=="i")
+		{
+			cin>>a;
+			cin>>b;
+			l.insert(a,b);	
+		}
+		if(s=="print")
+		{
+			cin>>b;
+			l.print(b);
+		}
+		if(s=="exit")
+		{
+			break;
+		}
+		
+	}
+}

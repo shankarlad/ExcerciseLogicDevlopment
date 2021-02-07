@@ -1,0 +1,1270 @@
+// Bubble Sort //
+
+#include<iostream>
+using namespace std;
+
+
+void bubbleSort(int arr[], int n) {
+	int temp;
+	for (int i = 0; i < n-1; i++) {
+		
+		for (int j = 0; j < n-i-1; j++) {
+			
+			if (arr[j] > arr[j+1]) {
+				temp=arr[j];
+				arr[j]=arr[j+1];
+				arr[j+1]=temp;
+			}
+		}
+	}	
+}
+
+int main() {
+	
+	int n;
+	cout << "Enter the Number of elements : ";
+	cin >> n;
+	
+	int arr[n];
+	cout << "Enter the array elements : ";
+	for (int i = 0; i < n; i++) {
+		cin >> arr[i];
+	}
+	
+	cout << "Unsorted array is : ";
+	for (int i = 0; i < n; i++) {
+		cout << arr[i] << " ";
+	}
+	cout<<endl;
+	bubbleSort(arr, n);
+	
+	cout << "Sorted array is : ";
+	for (int i = 0; i < n; i++) {
+		cout << arr[i] << " ";
+	}
+	
+	return 0;
+}
+========================================
+//Circular Queue using array
+// Online C++  to run C++ program online
+#include <iostream>
+using namespace std;
+int Q[100],rear,front, cnt,maxsize;
+
+void createQueue(int size){
+    rear=-1;
+    front=0;
+    cnt=0;
+    maxsize=size;
+}
+
+void enqueue(int e){
+    cnt++;
+    rear= (rear+1)%maxsize;
+    Q[rear]=e;
+}
+
+int dequeue(){
+    cnt--;
+    int temp= Q[front];
+    Q[front] = 0;
+    front=(front+1)%maxsize;
+    return temp;
+}
+
+bool isFull(){
+    if(cnt==maxsize)
+    	return true;
+    else 
+		return false;
+}
+
+
+bool isEmpty(){
+    if(cnt==0)
+    return true;
+    else return false;
+}
+
+void printQueue(){
+	int i=0;
+	int j= front;
+	while(i<cnt){
+		cout<<Q[j]<<" ";
+		i++;
+		j= (j+1)%maxsize;
+	}
+	cout<<endl;
+}
+int main() {
+    int size,no;
+    cout<<"please enter the size"<<endl;
+    cin>>size;
+    createQueue(size);
+    int c=1;
+    while(c){
+    cout<<"please enter choice\n1 enqueue\n2 dequeue\n3 print queue\n0 exit"<<endl;
+    cin>>c;
+    switch(c){
+    	
+    case 1:
+    
+    if(!isFull()){
+    	 cout<<"please enter the number"<<endl;
+    cin>>no;
+    	 enqueue(no);
+    	 }
+    else cout<<"Queue Full!!!\n";
+    break;
+    
+    case 2:
+    if(!isEmpty())
+    cout<<"dequeued element "<<dequeue()<<endl;
+    else cout<<"Queue Empty!!!!\n";
+       break;
+       
+       case 3:
+       	if(!isEmpty())
+       	printQueue();
+       	else cout<<"Queue Empty!!!!\n";
+       	break;
+    case 0:
+    cout<< "exiting!!!!!\n";
+    break;
+    default:
+    cout<<"invalid input\n";
+    break;
+    
+    }
+    }
+
+    return 0;
+}
+==================================================
+//Circular Linked List
+#include<iostream>
+using namespace std;
+
+struct Node{
+	int data;
+	struct Node *next;
+};
+
+class CLL{
+	private:
+		Node *root,*last;
+	
+	public:
+		void create();
+		void insertRight(int e);
+		void deleteRight();
+		void print();
+		void cycle(int c);
+};
+
+void CLL::create(){
+	root=last=NULL;
+}
+
+void CLL::insertRight(int e){
+	Node *n;
+	n= new Node;
+	n->data=e;
+	n->next = NULL;
+	
+	if(root == NULL){
+		root = last = n->next = n;
+		
+	}
+	else{
+		last->next = n;
+		n->next = root;
+		last = n;
+	}
+}
+
+void CLL::deleteRight(){
+	Node *t,*t2;
+	if(root == NULL){
+		cout<<"List is empty!!!\n";
+	}
+	else if(root == last){
+		cout<<"Deleted element: "<<root->data<<endl;
+		delete root;
+		root = last = NULL;
+	}
+	else{
+		t = root;
+		while(t !=last){
+			t2 = t;
+			t= t->next; 
+		}
+		t2->next = root;
+		last = t2;
+		cout<<"Deleted element: "<<t->data<<endl;
+		delete t;
+	}
+}
+
+void CLL::print(){
+	Node *t;
+	if(root == NULL){
+		cout<<"List is empty!!!\n";
+	}
+	else{
+		t =root;
+		do{
+			cout<<t->data<<" ";
+			t = t->next;
+		}while(t!= root);
+	}
+	cout<<endl;
+}
+
+void CLL::cycle(int c){
+	Node *t;
+	if(root == NULL){
+		cout<<"List is empty!!!\n";
+	}
+	else{
+		for(int i=1;i<=c;i++){
+			t= root;	
+			while(t->next!=last){
+				t=t->next;
+			}
+			root = last;
+			last = t;
+		}	
+	}
+	
+}
+
+int main(){
+	CLL cll;
+	cll.create();
+	int choice;
+	int no;
+	
+	do{
+		cout<<"Please enter choice"<<
+				"\n1. Insert Right"<<
+				"\n2. Delete Right"<<
+				"\n3. Print"<<
+				"\n4. cycle"<<
+				"\n0. Exit!!"<<endl;
+		cin>>choice;
+		switch(choice){		
+			case 1:
+				{
+					cout<<"Enter Number\n";
+					cin>>no;
+					cll.insertRight(no);
+					break;
+				}
+			case 2:
+				{
+					cll.deleteRight();
+					break;
+				}
+			case 3:
+				{
+					cll.print();
+					break;
+				}
+			case 4:
+				{
+					int c;
+					cout<<"Enter number of cylces\n";
+					cin>>c;
+					cll.cycle(c);
+					cll.print();
+					break;
+				}
+			case 0:
+				{
+					cout<<"Exiting !!!!!!...\n";
+					break;
+				}
+			default:{
+				cout<<"Invalid Choice\n";
+				break;
+			}
+		}	
+	}while(choice);
+}
+
+=================================================
+//Singly Linked List
+#include<iostream>
+using namespace std;
+
+class Node{
+	private:
+			int data;
+			Node *next;
+			
+	public:
+		Node(int data){
+			this->data = data;
+			next = NULL;
+		}
+		
+		int getData(){
+			return data;
+		}
+		
+		Node *getNext(){
+			return next;
+		}
+		
+		void setNext(Node *next){
+			this->next = next;
+		}
+};
+
+class Linklist{
+	private:
+		Node *head;
+	public:
+		Linklist(){
+			head = NULL;
+		}
+		
+		// Insert At Begining
+		void insertAtBegining(int data){
+			Node * node = new Node(data);
+			if(head == NULL)
+				head = node;
+			else{
+				node->setNext(head);
+				head = node;
+			}
+		}
+		
+		// Insert At End
+		void insertAtEnd(int data){
+			Node * node = new Node(data);
+			if(head == NULL)
+				head = node;
+			else{
+				Node * temp = head;
+				while(temp->getNext() != NULL){
+					temp = temp->getNext();
+				}
+				temp->setNext(node);
+			}
+		}
+		
+		// Insert After
+		int insertAfter(int after,int data){
+			Node *node = new Node(data);
+			Node *temp= head;
+			while(temp->getData() != after){
+				temp = temp->getNext();
+				if(temp == NULL)
+					return 0;
+			}
+			if(head->getData() == data){
+				node->setNext(temp->getNext());
+				head->setNext(node);
+			}
+			else{
+				node->setNext(temp->getNext());
+				temp->setNext(node);
+			}
+		}
+		
+		// Insert Before
+		int insertBefore(int before,int data){
+			Node *node = new Node(data);
+			Node *temp = head;
+			Node *prev = temp;
+			while(temp->getData() != before){
+				prev = temp;
+				temp = temp->getNext();
+				if(temp == NULL)
+					return 0;
+			}
+			if(head->getData() == data){
+				node->setNext(head);
+				head = node;
+			}
+			else{
+				node->setNext(prev->getNext());
+				prev->setNext(node);
+			}
+		}
+		
+		// Delete End
+		void deleteAtEnd(){
+			Node *temp = head;
+			Node *prev = temp;
+			while(temp->getNext()!=NULL){
+				prev = temp;
+				temp=temp->getNext();
+			} 
+			prev->setNext(NULL);
+			delete temp;
+		}
+		
+		// Delete Node
+		int deleteNode(int data){
+			Node *temp = head;
+			Node *prev = temp;
+			while(temp->getData()!=data){
+				prev = temp;
+				temp = temp->getNext();
+				if(head == NULL)
+					return 0;
+			}
+			if(head->getData() == data){
+				head = head->getNext();
+				delete temp;
+			}else{
+				prev->setNext(temp->getNext());
+				delete temp;
+			}
+		}
+		
+		// Delete After
+		int deleteAfter(int after){
+			Node *temp = head;
+			Node *prev = temp;
+			while(temp->getData() != after){
+				prev = temp;
+				temp = temp->getNext();
+				if(head == NULL)
+					return 0;
+			}
+			prev = temp;
+			temp = temp->getNext();
+			if(temp!=NULL){
+				prev->setNext(temp->getNext());
+				delete temp;
+			}
+		}
+		
+		// Delete Before
+		int deleteBefore(int before){
+			Node *temp = head;
+			Node *prev = temp;
+			while(head->getData() == before){
+				return 0;
+			}
+			if(head->getNext()->getData()==before){
+				head = head->getNext();
+			}else{
+				while(temp->getNext()->getData()!=before){
+					prev = temp;
+					temp = temp->getNext();
+				}
+			prev->setNext(temp->getNext());
+			delete temp;
+			}
+		}
+		
+		// Reverse LinkList
+		 void reverses()
+        {
+            Node *temp = head;
+            reverseNode(temp);
+            cout<<endl;
+        }
+
+        void reverseNode(Node *temp)
+        {
+            if(temp->getNext()!=NULL)
+            {
+                reverseNode(temp->getNext());
+            }
+            cout<<temp->getData()<<" ";
+        }
+		
+		// Print
+		void print(){
+			Node *temp = head;
+			while(temp->getNext() != NULL){
+				cout<<temp->getData()<<"->";
+				temp = temp->getNext();
+			}
+			cout<<temp->getData()<<endl;
+		}	
+};
+
+
+int main(){
+	Linklist linkList;
+	
+	string cmd;
+	int data,number;
+	
+	cout<<"1.IB\n2.IE";
+	while(1){
+		cin>>cmd;
+		
+		if(cmd == "ib"){
+			cin>>data;
+			linkList.insertAtBegining(data);
+		}
+		
+		if(cmd == "ie"){
+			cin>>data;
+			linkList.insertAtEnd(data);
+		}
+		
+		if(cmd == "iaf"){
+			cin>>data;
+			cin>>number;
+			linkList.insertAfter(number,data);
+		}
+		
+		if(cmd == "ibf"){
+			cin>>data;
+			cin>>number;
+			linkList.insertBefore(number,data);
+		}
+		
+		if(cmd=="de"){
+			linkList.deleteAtEnd();
+		}
+		
+		if(cmd=="dn"){
+			cin>>data;
+			linkList.deleteNode(data);
+		}
+		
+		if(cmd=="da"){
+			cin>>number;
+			linkList.deleteAfter(number);
+		}
+		
+		if(cmd=="db"){
+			cin>>number;
+			linkList.deleteBefore(number);
+		}
+		
+		if(cmd == "print"){
+			linkList.print();
+		}
+		
+		if(cmd == "rvs"){
+			linkList.reverses();
+		}
+		
+		if(cmd == "exit"){
+			exit(0);
+		}
+	}
+	
+	return 0;
+	
+}
+
+
+======================================
+//Circular Linked List
+#include<iostream>
+using namespace std;
+
+struct Node{
+	int data;
+	struct Node *next;
+};
+
+class CLL{
+	private:
+		Node *root,*last;
+	
+	public:
+		void create();
+		void insertRight(int e);
+		void deleteRight();
+		void print();
+		void cycle(int c);
+};
+
+void CLL::create(){
+	root=last=NULL;
+}
+
+void CLL::insertRight(int e){
+	Node *n;
+	n= new Node;
+	n->data=e;
+	n->next = NULL;
+	
+	if(root == NULL){
+		root = last = n->next = n;
+		
+	}
+	else{
+		last->next = n;
+		n->next = root;
+		last = n;
+	}
+}
+
+void CLL::deleteRight(){
+	Node *t,*t2;
+	if(root == NULL){
+		cout<<"List is empty!!!\n";
+	}
+	else if(root == last){
+		cout<<"Deleted element: "<<root->data<<endl;
+		delete root;
+		root = last = NULL;
+	}
+	else{
+		t = root;
+		while(t !=last){
+			t2 = t;
+			t= t->next; 
+		}
+		t2->next = root;
+		last = t2;
+		cout<<"Deleted element: "<<t->data<<endl;
+		delete t;
+	}
+}
+
+void CLL::print(){
+	Node *t;
+	if(root == NULL){
+		cout<<"List is empty!!!\n";
+	}
+	else{
+		t =root;
+		do{
+			cout<<t->data<<" ";
+			t = t->next;
+		}while(t!= root);
+	}
+	cout<<endl;
+}
+
+void CLL::cycle(int c){
+	Node *t;
+	if(root == NULL){
+		cout<<"List is empty!!!\n";
+	}
+	else{
+		for(int i=1;i<=c;i++){
+			t= root;	
+			while(t->next!=last){
+				t=t->next;
+			}
+			root = last;
+			last = t;
+		}	
+	}
+	
+}
+
+int main(){
+	CLL cll;
+	cll.create();
+	int choice;
+	int no;
+	
+	do{
+		cout<<"Please enter choice"<<
+				"\n1. Insert Right"<<
+				"\n2. Delete Right"<<
+				"\n3. Print"<<
+				"\n4. cycle"<<
+				"\n0. Exit!!"<<endl;
+		cin>>choice;
+		switch(choice){		
+			case 1:
+				{
+					cout<<"Enter Number\n";
+					cin>>no;
+					cll.insertRight(no);
+					break;
+				}
+			case 2:
+				{
+					cll.deleteRight();
+					break;
+				}
+			case 3:
+				{
+					cll.print();
+					break;
+				}
+			case 4:
+				{
+					int c;
+					cout<<"Enter number of cylces\n";
+					cin>>c;
+					cll.cycle(c);
+					cll.print();
+					break;
+				}
+			case 0:
+				{
+					cout<<"Exiting !!!!!!...\n";
+					break;
+				}
+			default:{
+				cout<<"Invalid Choice\n";
+				break;
+			}
+		}	
+	}while(choice);
+}
+
+================================================
+// Insertion Sort //
+
+#include<iostream>
+using namespace std;
+
+void insertionSort(int arr[], int n) {
+	
+	int i,j,key;
+	
+	for (i = 1; i < n; i++) {
+		
+		key = arr[i];
+		j = i-1;
+		
+		while (j >= 0 && arr[j] > key) {
+			
+			arr[j+1] = arr[j];
+			j = j-1;
+		}
+		
+		arr[j+1] = key;
+	}
+}
+
+int main() {
+	
+	int n;
+	cout << "Enter the Number of elements : ";
+	cin >> n;
+	
+	int arr[n];
+	cout << "Enter the array elements : ";
+	for (int i = 0; i < n; i++) {
+		cin >> arr[i];
+	}
+	
+	cout << "Unsorted array is : ";
+	for (int i = 0; i < n; i++) {
+		cout << arr[i] << " ";
+	}
+	cout<<endl;
+	insertionSort(arr, n);
+	
+	cout << "Sorted array is : ";
+	for (int i = 0; i < n; i++) {
+		cout << arr[i] << " ";
+	}
+	
+	return 0;
+}
+=======================================================
+// Selection Sort Algorithm //
+
+#include<iostream>
+using namespace std;
+
+//int swap(int *x, int *y){
+//	int temp = *x;
+//	*x = *y;
+//	*y = temp;
+//}
+//
+//int selectionSort(int arr[], int n) {
+//	for (int i = 0; i < n-1; i++) {
+//		
+//		int min = i;
+//		
+//		for (int j = i+1; j < n; j++) {
+//			
+//			if (arr[j] < arr[min]) {
+//				min = j;
+//			}
+//		}
+//		
+//		if (min != i){
+//
+//			swap(&arr[min],&arr[i]);
+//		}
+//	}
+//}
+void selectionSort(int arr[], int n) {
+	int temp;
+	for (int i = 0; i < n-1; i++) {
+		
+		for (int j =i+1 ; j <= n-1; j++) {
+			
+			if (arr[i] > arr[j]) {
+				temp=arr[i];
+				arr[i]=arr[j];
+				arr[j]=temp;
+			}
+		}
+	}	
+}
+int main() {
+	
+	int n;
+	cout << "Please Enter the Number of element : ";
+	cin >> n;
+	
+	int arr[n];
+	cout << "Enter the array elements : ";
+	for(int i = 0; i < n; i++) {
+		cin >> arr[i];
+	}
+	cout << endl;
+	cout << "Unsorted array is : ";
+	for(int i = 0; i < n; i++) {
+		cout << arr[i] << " ";
+	}
+	cout << endl;
+	selectionSort(arr,n);
+	cout << "Sorted array is : ";
+	for(int i = 0; i < n; i++) {
+		cout << arr[i] << " ";
+	}
+	
+	return 0;
+}
+============================================
+// C++ program to Implement a stack 
+//using singly linked list 
+#include <bits/stdc++.h> 
+using namespace std; 
+
+// Declare linked list node 
+
+struct Node 
+{ 
+	int data; 
+	struct Node* link; 
+}; 
+
+struct Node* top; 
+
+// Utility function to add an element 
+// data in the stack insert at the beginning 
+void push(int data) 
+{ 
+	
+	// Create new node temp and allocate memory 
+	struct Node* temp; 
+	temp = new Node(); 
+
+	// Check if stack (heap) is full. 
+	// Then inserting an element would 
+	// lead to stack overflow 
+	if (!temp) 
+	{ 
+		cout << "\nHeap Overflow"; 
+		exit(1); 
+	} 
+
+	// Initialize data into temp data field 
+	temp->data = data; 
+
+	// Put top pointer reference into temp link 
+	temp->link = top; 
+
+	// Make temp as top of Stack 
+	top = temp; 
+} 
+
+// Utility function to check if 
+// the stack is empty or not 
+int isEmpty() 
+{ 
+	return top == NULL; 
+} 
+
+// Utility function to return top element in a stack 
+int peek() 
+{ 
+	
+	// Check for empty stack 
+	if (!isEmpty()) 
+		return top->data; 
+	else
+		exit(1); 
+} 
+
+// Utility function to pop top 
+// element from the stack 
+void pop() 
+{ 
+	struct Node* temp; 
+
+	// Check for stack underflow 
+	if (top == NULL) 
+	{ 
+		cout << "\nStack Underflow" << endl; 
+		
+		exit(1); 
+	} 
+	else
+	{ 
+		
+		// Top assign into temp 
+		temp = top; 
+
+		// Assign second node to top 
+		top = top->link; 
+
+		// Destroy connection between 
+		// first and second 
+		temp->link = NULL; 
+
+		// Release memory of top node 
+		free(temp); 
+	} 
+} 
+
+// Function to print all the 
+// elements of the stack 
+void display() 
+{ 
+	struct Node* temp; 
+
+	// Check for stack underflow 
+	if (top == NULL) 
+	{ 
+		cout << "\nStack Underflow"; 
+		exit(1); 
+	} 
+	else
+	{ 
+		temp = top; 
+		while (temp != NULL) 
+		{ 
+
+			// Print node data 
+			cout << temp->data << "-> "; 
+
+			// Assign temp link to temp 
+			temp = temp->link; 
+		} 
+	} 
+} 
+
+// Driver Code 
+int main() 
+{ 
+	
+	// Push the elements of stack 
+	push(11); 
+	push(22); 
+	push(33); 
+	push(44); 
+
+	// Display stack elements 
+	display(); 
+
+	// Print top element of stack 
+	cout << "\nTop element is "
+		<< peek() << endl; 
+
+	// Delete top elements of stack 
+	pop(); 
+	pop(); 
+
+	// Display stack elements 
+	display(); 
+
+	// Print top element of stack 
+	cout << "\nTop element is "
+		<< peek() << endl; 
+		
+	return 0; 
+} 
+
+// This code is contributed by Striver 
+//8/89888
+
+
+
+=================================
+// Stack Implementation using Array
+
+#include<iostream>
+#include<assert.h>
+using namespace std;
+
+class Stack{
+	private :
+		int top;
+		int size;
+		int *store;
+	
+	public:
+		Stack(int size){
+			top = -1;
+			this->size = size;
+			store = new int[size];
+		}
+		
+		bool isFull(){
+			if(top == size-1){
+				cout<<"Stack Is Full..."<<endl;
+				return true;
+			}else{
+				return false;
+			}		
+		}
+		
+		bool isEmpty(){
+			if(top == -1){
+				cout<<"Stack Is Empty..."<<endl;
+				return true;
+			}else{
+				return false;
+			}
+		}
+		
+		void push(int data){
+			assert(!isFull());
+            		top++;
+            		store[top]=data;
+		}
+		
+		int pop(){
+			assert(!isEmpty());
+            		int data=store[top];
+            		top--;
+            		return data;
+		}	
+		
+		int atTop(){
+			return store[top];
+		}	
+		
+		void printStack() {
+			for (int i = top; i > -1; i--) {
+			cout << store[i]<<"\t";
+			}
+			cout << endl;
+		}
+};
+
+int main(){
+	int s,ch,e;
+	cout << "Enter the max size of stack"<<endl;
+	cin >> s;//5
+
+	Stack stack(s);
+
+	do {
+		cout << "Enter Choice"<<endl<<"\n1.Push\n2.Pop\n3.atTop\n4.PrintStack\n0.Exit" << endl;
+		cin >> ch;
+		switch (ch) {
+		case 1:
+			if (stack.isFull() == true) {
+				cout << "Stack is full" << endl;
+			}
+			else {
+				cout << "Enter the number to push" << endl;
+				cin >> e;
+				stack.push(e);
+			}
+			break;
+		case 2:
+			if (stack.isEmpty() == true) {
+				cout << "Stack is empty" << endl;
+			}
+			else {
+				cout << stack.pop()<<endl;
+			}
+			break;
+		case 3:
+			if (stack.isEmpty() == true) {
+				cout << "Stack is empty" << endl;
+			}
+			else {
+				cout << stack.atTop()<<endl;
+			}
+			break;
+		case 4:
+			if (stack.isEmpty() == true) {
+				cout << "Stack is empty" << endl;
+			}
+			else {
+				stack.printStack();
+			}
+			break;
+		case 0:
+			cout << "Exiting" << endl;
+			break;
+
+		default:
+			cout << "Error: Try Again" << endl;
+			break;
+		}
+
+	} while (ch != 0);
+
+    return 0;
+}
+=====================================================
+// C++ program to Implement a stack 
+//using singly linked list 
+#include <bits/stdc++.h> 
+using namespace std; 
+
+// Declare linked list node 
+
+struct Node 
+{ 
+	int data; 
+	struct Node* link; 
+}; 
+
+struct Node* top; 
+
+// Utility function to add an element 
+// data in the stack insert at the beginning 
+void push(int data) 
+{ 
+	
+	// Create new node temp and allocate memory 
+	struct Node* temp; 
+	temp = new Node(); 
+
+	// Check if stack (heap) is full. 
+	// Then inserting an element would 
+	// lead to stack overflow 
+	if (!temp) 
+	{ 
+		cout << "\nHeap Overflow"; 
+		exit(1); 
+	} 
+
+	// Initialize data into temp data field 
+	temp->data = data; 
+
+	// Put top pointer reference into temp link 
+	temp->link = top; 
+
+	// Make temp as top of Stack 
+	top = temp; 
+} 
+
+// Utility function to check if 
+// the stack is empty or not 
+int isEmpty() 
+{ 
+	return top == NULL; 
+} 
+
+// Utility function to return top element in a stack 
+int peek() 
+{ 
+	
+	// Check for empty stack 
+	if (!isEmpty()) 
+		return top->data; 
+	else
+		exit(1); 
+} 
+
+// Utility function to pop top 
+// element from the stack 
+void pop() 
+{ 
+	struct Node* temp; 
+
+	// Check for stack underflow 
+	if (top == NULL) 
+	{ 
+		cout << "\nStack Underflow" << endl; 
+		
+		exit(1); 
+	} 
+	else
+	{ 
+		
+		// Top assign into temp 
+		temp = top; 
+
+		// Assign second node to top 
+		top = top->link; 
+
+		// Destroy connection between 
+		// first and second 
+		temp->link = NULL; 
+
+		// Release memory of top node 
+		free(temp); 
+	} 
+} 
+
+// Function to print all the 
+// elements of the stack 
+void display() 
+{ 
+	struct Node* temp; 
+
+	// Check for stack underflow 
+	if (top == NULL) 
+	{ 
+		cout << "\nStack Underflow"; 
+		exit(1); 
+	} 
+	else
+	{ 
+		temp = top; 
+		while (temp != NULL) 
+		{ 
+
+			// Print node data 
+			cout << temp->data << "-> "; 
+
+			// Assign temp link to temp 
+			temp = temp->link; 
+		} 
+	} 
+} 
+
+// Driver Code 
+int main() 
+{ 
+	
+	// Push the elements of stack 
+	push(11); 
+	push(22); 
+	push(33); 
+	push(44); 
+
+	// Display stack elements 
+	display(); 
+
+	// Print top element of stack 
+	cout << "\nTop element is "
+		<< peek() << endl; 
+
+	// Delete top elements of stack 
+	pop(); 
+	pop(); 
+
+	// Display stack elements 
+	display(); 
+
+	// Print top element of stack 
+	cout << "\nTop element is "
+		<< peek() << endl; 
+		
+	return 0; 
+} 
+
+// This code is contributed by Striver 
+//8/89888
+
+
+=================================================

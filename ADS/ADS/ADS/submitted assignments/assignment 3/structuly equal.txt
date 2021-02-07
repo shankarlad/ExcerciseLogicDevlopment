@@ -1,0 +1,146 @@
+#include<iostream>
+#include<cstring>
+using namespace std;
+
+class Node
+{
+    private:
+        int data;
+        Node *left;
+        Node * right;
+    public:
+        Node(int data)
+        {
+            this->data=data;
+            left=NULL;
+            right=NULL;
+        }
+        int getdata()
+        {
+            return data;
+        }
+        Node *getleft()
+        {
+            return left;
+        }
+        Node *getright()
+        {
+            return right;
+        }
+        void setleft(Node *left)
+        {
+            this->left=left;
+        }
+        void setright(Node *right)
+        {
+            this->right=right;
+        }
+};
+class BST
+{
+    private:
+        Node *root;
+    public:
+        BST()
+        {
+            root=NULL;
+        }
+        
+        Node *getroot()
+        {
+            return root;
+        }
+        
+        void travers(int data)
+        {
+            Node *node=new Node(data);
+            if(root==NULL)
+            {
+                root=node;
+            }
+            else
+            {
+                Node *temp=root;
+                Node *prev=NULL;
+                while(temp!=NULL)
+                {
+                    prev=temp;
+                    if(data<=temp->getdata())
+                        temp=temp->getleft();
+                    else
+                        temp=temp->getright();
+                }
+                if(data<=prev->getdata())
+                    prev->setleft(node);
+                else
+                    prev->setright(node);
+            }
+        }
+        
+        int structure(Node *temp)
+        {
+            if(temp==NULL)
+                return 0;
+                
+            else
+            {
+                int a=structure(temp->getleft());
+                int b=structure(temp->getright());
+                
+                if(a>b)
+                    return (a+1);
+                    
+                else
+                    return (b+1);
+            }
+        }
+};
+
+int search(Node *root1,Node *root2)
+{
+    if(root1==NULL && root2==NULL)
+    {
+        return 1;
+    }
+    if(root1!=NULL && root2!=NULL)
+    {
+        return(search(root1->getleft(),root2->getleft()) && search(root1->getright(),root2->getright()));
+    }
+    else
+    {
+        return 0;
+    }
+}
+int main()
+{
+
+    int a,z=1;
+    cin>>a;
+    BST b;
+    while(z!=-1)
+    {
+        cin>>z;
+        if(z!=-1)
+        b.travers(z);
+    }
+    for(int j=0;j<(a-1);j++)
+    {
+        z=1;
+        BST b1;
+        while(z!=-1)
+        {
+            cin>>z;
+            if(z!=-1)
+            b1.travers(z);
+        }
+        
+        int diff(b1.structure(b1.getroot())-(b.structure(b.getroot())));
+        
+        int y=search(b.getroot(),b1.getroot());
+        if(y==1)
+            cout<<"YES"<<" "<<diff<<endl;
+        else if(y==0)
+            cout<<"NO"<<" "<<diff<<endl;
+    }
+    return 0;
+}

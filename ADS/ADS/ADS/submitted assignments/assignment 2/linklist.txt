@@ -1,0 +1,316 @@
+#include<iostream>
+#include<cstring>
+#include<stdlib.h>
+using namespace std;
+
+class Node
+{
+    private:
+        int data;
+        Node *next;
+    public:
+        Node(int data)
+        {
+            this->data=data;
+            next=NULL;
+        }
+        ~Node()
+        {
+            
+        }
+        int getdata()
+        {
+            return data;
+        }
+        Node *getnext()
+        {
+            return next;
+        }
+        void setnext(Node *next)
+        {
+            this->next=next;
+        }
+};
+
+class linklist
+{
+    private:
+        Node *head;
+    public:
+        linklist()
+        {
+            head=NULL;
+        }
+        ~linklist()
+        {
+            
+        }
+        void insertBegin(int data)
+        {
+            Node *node=new Node(data);
+            if(head==NULL)
+            {
+                head=node;
+            }
+            else
+            {
+                node->setnext(head);
+                head=node;
+            }
+        }
+
+        void insertEnd(int data)
+        {
+            Node *node=new Node(data);
+            if(head==NULL)
+            {
+                head=node;
+            }
+            else
+            {
+                Node *temp=head;
+                while(temp->getnext()!=NULL)
+                {
+                    temp=temp->getnext();
+                }
+                temp->setnext(node);
+            }
+        }
+
+        int insertafter(int after,int data)
+        {
+            Node *node=new Node(data);
+            Node *temp=head;
+            while(temp->getdata()!=after)
+            {
+                temp=temp->getnext();
+                if(temp==NULL)
+                {
+                    return 0;
+                }
+            }
+            if(head->getdata()==data)
+            {
+                node->setnext(temp->getnext());
+                head->setnext(node);
+            }
+            else
+            {
+                node->setnext(temp->getnext());
+                temp->setnext(node);
+            }
+        }
+            int insertbefore(int before,int data)
+        {
+            Node *node=new Node(data);
+            Node *temp=head;
+            Node *prev=temp;
+            while(temp->getdata()!=before)
+            {   
+                prev=temp;
+                temp=temp->getnext();
+                if(temp==NULL)
+                {
+                    return 0;
+                }
+            }    
+            if(head->getdata()==before)
+            {
+                node->setnext(head);
+                head=node;
+            }
+            else
+            {
+                node->setnext(prev->getnext());
+                prev->setnext(node);
+            }
+        }
+       
+       
+       void deleteBegin()
+        {
+            Node *temp=head;
+            temp->setnext(head);
+            delete temp;
+        }
+        void deleteEnd()
+        {
+            Node *temp=head;
+            Node *prev;
+            while(temp->getnext()!=NULL)
+            {
+                prev=temp;
+                temp=temp->getnext();
+            }
+            prev->setnext(NULL);
+            delete temp;
+        }
+        int deleteN(int data)
+        {
+            Node *temp=head;
+            Node *prev=head;
+            while(temp->getdata()!=data)
+            {
+                prev=temp;
+                temp=temp->getnext();
+                if(temp==NULL)
+                {
+                    return 0;
+                }
+            }
+            if(head->getdata()==data)
+            {
+                head=head->getnext();
+                delete temp;
+            }
+            else
+            {
+                prev->setnext(temp->getnext());
+                delete temp;
+            }
+        }
+        int deleteafter(int after)
+        {
+            Node *temp=head;
+            Node *prev=head;
+            while(temp->getdata()!=after)
+            {
+                prev=temp;
+                temp=temp->getnext();
+                if(temp==NULL)
+                {
+                    return 0;
+                }
+            }
+            prev=temp;
+            temp=temp->getnext();
+            if(temp!=NULL)
+            {
+                prev->setnext(temp->getnext());
+                delete temp;
+            }
+            
+        }
+        int deletebefore(int before)
+        {
+            Node *temp=head;
+            Node *prev=head;
+            if(head->getdata()==before)
+            {
+                return 0;
+            }
+            if(head->getnext()->getdata()==before)
+            {
+                head=head->getnext();
+            }
+            else
+            {
+                while(temp->getnext()->getdata()!=before)
+                {
+                    prev=temp;
+                    temp=temp->getnext();
+                }
+            prev->setnext(temp->getnext());
+            delete temp;
+            }
+        }
+        void reverses()
+        {
+            Node *temp;
+            temp=head;
+            reverse1(temp);
+            cout<<endl;
+        }
+        void reverse1(Node *temp)
+        {
+            if(temp->getnext()!=NULL)
+            {
+                reverse1(temp->getnext());
+            }
+            cout<<temp->getdata()<<" ";
+        }
+        void print()
+        {
+            Node *temp=head;
+            while(temp->getnext()!=NULL)
+            {
+                cout<<temp->getdata()<<" ";
+                temp=temp->getnext();
+            }
+            cout<<temp->getdata()<<endl;
+        }
+        void show()
+        {
+            Node *temp=head;
+            while(temp->getnext()!=NULL)
+            {  
+                cout<<temp->getdata()<<"->";
+                temp=temp->getnext();
+            }
+            cout<<temp->getdata()<<endl;
+        }
+};
+int main()
+{
+    int d,a,b;
+    linklist ll;
+    string cmd;
+    while(1)
+    { 
+        cin>>cmd;
+        if(cmd=="EXIT")
+        {
+            exit(0);
+        }
+        if(cmd=="AB")
+        {
+            cin>>d;
+            ll.insertBegin(d);
+            
+        }
+        if(cmd=="PR")
+        {
+            ll.print();
+        }
+        if(cmd=="AE")
+        {
+            cin>>d;
+            ll.insertEnd(d);
+        }
+        if(cmd=="AMA")
+        {   
+            cin>>a>>d;
+            ll.insertafter(a,d);
+        }
+        if(cmd=="AMB")
+        {
+            cin>>b>>d;
+            
+            ll.insertbefore(b,d);
+        }
+        if(cmd=="DN")
+        {
+            cin>>d;
+            ll.deleteN(d);
+        }
+        if(cmd=="DNA")
+        {   
+            cin>>a;
+            ll.deleteafter(a);
+        }
+        if(cmd=="DNB")
+        {
+            cin>>b;
+            ll.deletebefore(b);
+        }
+        if(cmd=="FPR")
+        {
+            ll.show();
+        }
+        if(cmd=="RPR")
+        {
+            ll.reverses();
+        }
+    }
+    return 0;
+}

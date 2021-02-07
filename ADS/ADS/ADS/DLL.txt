@@ -1,0 +1,207 @@
+#include<iostream>
+
+using namespace std;
+class Node
+{
+        private:
+                int data;
+                Node *next;
+                Node *prev;
+        public:
+                Node()
+                {
+                }
+                Node(int data)
+                {
+                        this->data=data;
+                        this->next=NULL;
+                        this->prev=NULL;
+                }
+                int getdata()
+                {
+                        return data;
+                }
+                Node *getnext()
+                {
+                        return next;
+                }
+                Node *getprev()
+                {
+                        return prev;
+                }
+                void setnext(Node* next)
+                {
+                        this->next=next;
+                }
+                void setprev(Node *prev)
+                {
+                        this->prev=prev;
+                }
+};
+class doubly
+{
+        private:
+                Node *head;
+        public:
+                doubly()
+                {
+                        head=NULL;
+                }
+                void AB(int data)
+                {
+                        Node *node=new Node(data);
+                        if(head==NULL)
+                        {
+                                head=node;
+                        }
+                        else
+                        {
+                                node->setnext(head);
+                                head->setprev(node);
+                                head=node;
+                        }
+                }
+
+                void AE(int data)
+                {
+                        Node *node=new Node(data);
+                        Node *temp=head;
+
+                        if(head==NULL)
+                        {
+                                head=node;
+                        }
+                        else
+                        {
+                                while(temp->getnext()!=NULL)
+                                        temp=temp->getnext();
+                                temp->setnext(node);
+                                node->setprev(temp);
+                        }
+                }
+
+                void AMA(int after, int tobe)
+                {
+                        Node *node=new Node(tobe);
+                        Node *temp=head;
+                        while(temp!=NULL && temp->getdata()!=after)
+                                temp=temp->getnext();
+                        if(temp==NULL)
+                                cout<<"D N F"<<endl;
+                        else
+                        {
+                                node->setnext(temp->getnext());
+                                temp->getnext()->setprev(node);
+                                temp->setnext(node);
+                                node->setprev(temp);
+                        }
+                }
+
+                void AMB(int before, int tobe)
+                {
+                        Node *node=new Node(tobe);
+                        Node *temp=head;
+                        while(temp!=NULL && temp->getdata()!=before)
+                                temp=temp->getnext();
+                        if(temp==NULL)
+                                {
+                                cout<<"D N F"<<endl;
+                                }
+                                else
+                                {
+
+                                temp->getprev()->setnext(node);
+                                node->setprev(temp->getprev());
+                                temp->setprev(node);
+                                node->setnext(temp);
+                        }
+                }
+
+                void DN(int data)
+                {
+                        Node *temp=head;
+                        while(temp!=NULL && temp->getdata()!=data)
+                                temp=temp->getnext();
+                        if(temp==NULL)
+                        {
+                                cout<<" D N F "<<endl;
+                        }
+                        else
+                        {
+                        temp->getprev()->setnext(temp->getnext());
+                        temp->getnext()->setprev(temp->getprev());
+                        }
+                }
+
+                void DNA(int after)
+                {
+                        Node *temp=head;
+                        while(temp!=NULL && temp->getdata()!=after)
+                                temp=temp->getnext();
+                        cout<<temp->getdata()<<endl;
+                        if(temp==NULL)
+                        {
+                                cout<<" D N F"<<endl;
+                        }
+
+                        else
+                        {
+                        temp->getnext()->getnext()->setprev(temp);
+                        temp->setnext(temp->getnext()->getnext());
+                        }
+                }
+
+                void DNB(int before)
+                {
+                        Node *temp=head;
+                         while(temp!=NULL && temp->getdata()!=before)
+                                temp=temp->getnext();
+                        cout<<temp->getdata()<<endl;
+                        if(temp==NULL)
+                        {
+                                cout<<" D N F"<<endl;
+                        }
+
+                        else
+                        {
+                                temp->getprev()->getprev()->setnext(temp);
+                                temp->setprev(temp->getprev()->getprev());
+                        }
+                }
+                void PR()
+                {
+                        Node *temp=head;
+                        while(temp!=NULL)
+                        {
+                                cout<<temp->getdata()<<" ";
+                                temp=temp->getnext();
+                        }
+                        cout<<endl;
+                }
+
+                void RPR()
+                {
+                        Node *temp=head;
+                        while(temp->getnext()!=NULL)
+                                temp=temp->getnext();
+                        while(temp!=NULL)
+                        {
+                                cout<<temp->getdata()<<" ";
+                                temp=temp->getprev();
+                        }
+                        cout<<endl;
+                }
+};
+int main()
+{
+        doubly l;
+        l.AB(10);
+        l.AB(20);
+        l.AMB(20,30);
+        l.AB(40);
+        l.AB(50);
+        l.PR();
+        l.DNB(30);
+        l.PR();
+        return 0;
+}

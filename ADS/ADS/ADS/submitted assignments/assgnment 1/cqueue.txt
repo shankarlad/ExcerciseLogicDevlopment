@@ -1,0 +1,106 @@
+#include<iostream>
+using namespace std;
+
+class cqueue{
+    private:
+        int size;
+        int front;
+        int rear;
+        int noe;
+        int *store;
+    public:
+        cqueue(){
+            size=0;
+            front=rear=-1;
+            noe=0;
+            store=NULL;
+        }
+        cqueue(int size){
+            this->size=size;
+            noe=0;
+            front=rear=-1;
+            store=new int[size];
+        }
+        ~cqueue(){
+            delete [] store;
+        }
+        int isFull(){
+            if(noe==size)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        int isEmpty()
+        {
+            if(noe==0)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        void enqueue(int data)
+        {
+            rear=(rear+1)%size;
+            noe++;
+            store[rear]=data;
+        }
+        int dequeue()
+        {
+            front=(front+1)%size;
+            noe--;
+            int data=store[front];
+            if(front==rear)
+            {
+                front=rear=-1;
+            }
+            return data;
+        }
+};
+int main()
+{
+    int N;
+    cin>>N;
+    cqueue c(N);
+    int data;
+    string cmd;
+    while(1)
+    {
+        cin>>cmd;
+        if(cmd=="exit")
+        {
+            break;
+        }
+        if(cmd=="enque")
+        {
+            cin>>data;
+            if(!c.isFull())
+            {
+            
+                c.enqueue(data);
+            }
+            else
+            {
+                cout<<"FULL"<<endl;          
+            }
+        }
+        if(cmd=="deque")
+        {
+            if(!c.isEmpty())
+            {
+                cout<<c.dequeue()<<endl;
+            }
+            else
+            {
+                cout<<"EMPTY"<<endl;
+            }
+        }
+    }
+    return 0;
+}
